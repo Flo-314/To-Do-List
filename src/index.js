@@ -1,8 +1,7 @@
 const itemFactory = (title, description, checklist, priority, dueDate) => {
   return { title, description, checklist, priority, dueDate };
-  // root (what project is from)
-  // notes
 };
+let array = [];
 
 const domMethods = (() => {
   const itemBtn = document.querySelector("#itemBtn");
@@ -12,27 +11,39 @@ const domMethods = (() => {
     itemBtn.remove();
 
     const addItemContainer = document.createElement("div");
-    addItemContainer.classList.add("addItemContainer")
+    addItemContainer.classList.add("addItemContainer");
 
     const itemTitle = document.createElement("input");
     itemTitle.type = "text";
+    itemTitle.placeholder = "Task Title";
+    itemTitle.classList.add("itemTitle");
+
     const itemDescription = document.createElement("input");
     itemDescription.type = "text";
+    itemDescription.placeholder = "Description";
+    itemDescription.classList.add("itemDescription");
 
-    const itemCheckList = document.createElement("input");
-    itemCheckList.type = "checkbox";
-
-    const sumbitBtn = document.createElement("button")
-    sumbitBtn.addEventListener("click", () => {})
+    const sumbitBtn = document.createElement("button");
+    sumbitBtn.textContent = "Add new Task!";
+    sumbitBtn.addEventListener("click", () => {
+      let descriptionValue = itemDescription.value;
+      let titleValue = itemTitle.value;
+      itemMethods.createItem(titleValue, descriptionValue);
+    });
 
     const main = document.querySelector("main");
-    addItemContainer.append(itemTitle, itemDescription, itemCheckList);
+    addItemContainer.append(itemTitle, itemDescription, sumbitBtn);
     main.append(addItemContainer);
   }
-  function createItem(){
-      
-  }
-  return{itemPrompt}
-}
+  return { itemPrompt };
+})();
 
-)();
+const itemMethods = (() => {
+  function createItem(title, description, checklist) {
+    let newItem = itemFactory(title, description, checklist);
+    array.push(newItem);
+    console.log(array);
+  }
+
+  return { createItem };
+})();
