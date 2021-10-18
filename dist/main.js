@@ -1,1 +1,1 @@
-console.log("caaaaaca");
+(()=>{const e=document.querySelector("#itemBtn");e.addEventListener("click",(()=>function(){e.remove();const t=document.createElement("div");t.classList.add("addItemContainer");const n=document.createElement("input");n.type="text";const c=document.createElement("input");c.type="text";const o=document.createElement("input");o.type="checkbox",document.createElement("button").addEventListener("click",(()=>{}));const d=document.querySelector("main");t.append(n,c,o),d.append(t)}()))})();
