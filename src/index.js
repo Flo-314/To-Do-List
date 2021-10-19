@@ -1,38 +1,55 @@
-const itemFactory = (title, description, checklist, priority, dueDate) => {
-  return { title, description, checklist, priority, dueDate };
+const itemFactory = (title, description, dueDate, priority, checklist) => {
+  return { title, description, dueDate, priority, checklist };
 };
 
 let array = [];
 const mainMethods = (() => {
-  function deleteMain(){
-    const main = document.querySelector("main")
-    main.innerHTML = ""
+  function deleteMain() {
+    const main = document.querySelector("main");
+    main.innerHTML = "";
   }
-  function printMain(){
-    const main = document.querySelector("main")
-    deleteMain()
-    domItemMethods.printArray()
+  function createMainBody() {
+    const main = document.querySelector("main");
+    const mainContent = document.createElement("div");
+    mainContent.setAttribute("id", "main-content");
+    const mainTitle = document.createElement("div");
+    mainTitle.setAttribute("id", "main-title");
+    const mainContainer = document.createElement("div");
+    mainContainer.setAttribute("id", "item-container");
+
+    main.append(mainContent, mainTitle, mainContainer);
   }
-  return{printMain,deleteMain}
-})()
+  function printMain(title) {
+    const main = document.querySelector("main");
+    deleteMain();
+    createMainBody();
+    const mainTitle = document.querySelector("#main-title");
+    mainTitle.textContent = title;
+    domItemMethods.printArray();
+  }
+  return { printMain, deleteMain };
+})();
 
-
+//refactear el title
 const sidebarMethods = (() => {
   const homeBtn = document.querySelector("#homeBtn");
   homeBtn.addEventListener("click", () => {
-
-  mainMethods.printMain()
-    
+    let title = homeBtn.textContent;
+    mainMethods.printMain(title);
   });
 
   const todayBtn = document.querySelector("#todayBtn");
   todayBtn.addEventListener("click", () => {
+    let title = todayBtn.textContent;
+    mainMethods.printMain(title);
+
 
   });
 
   const weekBtn = document.querySelector("#weekBtn");
   weekBtn.addEventListener("click", () => {
-
+    let title = weekBtn.textContent;
+    mainMethods.printMain(title);
   });
 })();
 
@@ -98,7 +115,7 @@ const promptMethods = (() => {
 const domItemMethods = (() => {
   function printArray() {
     itemMethods.homeArray.forEach((item) => {
-      printItem();
+      printItem(item.title, item.description, item.dueDate);
     });
   }
   function printItem(title, description, duedate, checklist) {
@@ -134,11 +151,28 @@ const domItemMethods = (() => {
 })();
 
 const itemMethods = (() => {
-  let homeArray = [{
-    "title": "asdasd",
-    "description": "asdasd",
-    "checklist": "2021-10-04"
-  }];
+  let homeArray = [
+    {
+      title: "CUNinjam me tiene envidia",
+      description: "es un envidiso",
+      dueDate: "2021-10-30",
+    },
+    {
+      title: "CUNinjam me tiene envidia",
+      description: "es un envidiso",
+      dueDate: "2021-10-30",
+    },
+    {
+      title: "CUNinjam me tiene envidia",
+      description: "es un envidiso",
+      dueDate: "2021-10-30",
+    },
+    {
+      title: "CUNinjam me tiene envidia",
+      description: "es un envidiso",
+      dueDate: "2021-10-30",
+    },
+  ];
   let todayArray = [];
   let weekArray = [];
 
