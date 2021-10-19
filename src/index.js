@@ -25,7 +25,7 @@ const mainMethods = (() => {
     createMainBody();
     const mainTitle = document.querySelector("#main-title");
     mainTitle.textContent = title;
-    domItemMethods.printArray();
+    domItemMethods.printArray(title);
   }
   return { printMain, deleteMain };
 })();
@@ -113,8 +113,9 @@ const promptMethods = (() => {
 })();
 
 const domItemMethods = (() => {
-  function printArray() {
-    itemMethods.homeArray.forEach((item) => {
+  function printArray(title) {
+    array = itemMethods.title
+    itemMethods.title.forEach((item) => {
       printItem(item.title, item.description, item.dueDate);
     });
   }
@@ -151,30 +152,25 @@ const domItemMethods = (() => {
 })();
 
 const itemMethods = (() => {
-  let homeArray = [
-    {
-      title: "CUNinjam me tiene envidia",
-      description: "es un envidiso",
-      dueDate: "2021-10-30",
-    },
-    {
-      title: "CUNinjam me tiene envidia",
-      description: "es un envidiso",
-      dueDate: "2021-10-30",
-    },
-    {
-      title: "CUNinjam me tiene envidia",
-      description: "es un envidiso",
-      dueDate: "2021-10-30",
-    },
-    {
-      title: "CUNinjam me tiene envidia",
-      description: "es un envidiso",
-      dueDate: "2021-10-30",
-    },
-  ];
-  let todayArray = [];
-  let weekArray = [];
+
+  let arrays = [ ]
+ 
+ let home = [{title:"home",
+              array: [{project: "CUNinjam me tiene envidia",
+              description: "es un envidiso",
+              dueDate: "2021-10-30",}]}]
+ 
+ let today = [{project:"today",
+ array: [{title: "CUNinjam me tiene envidia",
+ description: "es un envidiso",
+ dueDate: "2021-10-30",},{title: "CUNinjam me tiene envidia",
+ description: "es un envidiso",
+ dueDate: "2021-10-30",}]}]
+
+arrays.push(week)
+arrays.push(today)
+arrays.push(home)
+  console.log(arrays)
 
   function createItem(title, description, dueDate, checkbox, array) {
     let newItem = itemFactory(title, description, dueDate, checkbox, array);
@@ -182,5 +178,5 @@ const itemMethods = (() => {
     console.log(homeArray);
   }
 
-  return { createItem, homeArray };
+  return { createItem, home,today,week };
 })();
