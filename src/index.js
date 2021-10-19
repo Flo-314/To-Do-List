@@ -39,6 +39,10 @@ const promptMethods = (() => {
     itemDescription.type = "text";
     itemDescription.placeholder = "Description";
     itemDescription.classList.add("itemDescription");
+    
+    const dueDate = document.createElement("input")
+    duedate.type = "date"
+
 
     const sumbitBtn = document.createElement("button");
     sumbitBtn.textContent = "Add new Task!";
@@ -46,19 +50,19 @@ const promptMethods = (() => {
     sumbitBtn.addEventListener("click", () => {
       let descriptionValue = itemDescription.value;
       let titleValue = itemTitle.value;
+      let dateValue = duedate.value
 
 
 
 
-
-      itemMethods.createItem(titleValue, descriptionValue);
-      domItemMethods.printItem(titleValue,descriptionValue)
+      itemMethods.createItem(titleValue, descriptionValue,dateValue);
+      domItemMethods.printItem(titleValue,descriptionValue,dateValue)
       removePromp();
       createItemBtn();
     });
 
     const main = document.querySelector("main");
-    addItemContainer.append(itemTitle, itemDescription, sumbitBtn);
+    addItemContainer.append(itemTitle, itemDescription,dueDate, sumbitBtn);
     main.append(addItemContainer);
   }
   return { itemPrompt };
@@ -109,8 +113,8 @@ function expandItem(){
  })();
 
 const itemMethods = (() => {
-  function createItem(title, description, checklist) {
-    let newItem = itemFactory(title, description, checklist);
+  function createItem(title, description, duedate) {
+    let newItem = itemFactory(title, description, duedate);
     array.push(newItem);
     console.log(array);
   }
