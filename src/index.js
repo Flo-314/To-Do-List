@@ -1,23 +1,31 @@
 const itemFactory = (title, description, checklist, priority, dueDate) => {
   return { title, description, checklist, priority, dueDate };
 };
+
 let array = [];
 
-const domMethods = (() => {
+////////////////-------------------//////////
+
+const promptMethods = (() => {
+  createItemBtn();
+
   function createItemBtn() {
-    const main = document.querySelector("main")
-    const itemBtn = document.createElement("button")
+    const main = document.querySelector("main");
+    const itemBtn = document.createElement("button");
+    itemBtn.textContent = "Add New Task!";
     itemBtn.setAttribute("id", "itemBtn");
     itemBtn.addEventListener("click", () => itemPrompt());
 
-    main.appendChild(itemBtn)
+    main.appendChild(itemBtn);
   }
 
-
-  const itemBtn = document.querySelector("#itemBtn");
-  itemBtn.addEventListener("click", () => itemPrompt());
+  function removePromp() {
+    const itemContainer = document.querySelector(".addItemContainer");
+    itemContainer.remove();
+  }
 
   function itemPrompt() {
+    const itemBtn = document.querySelector("#itemBtn");
     itemBtn.remove();
 
     const addItemContainer = document.createElement("div");
@@ -40,22 +48,27 @@ const domMethods = (() => {
       let descriptionValue = itemDescription.value;
       let titleValue = itemTitle.value;
       itemMethods.createItem(titleValue, descriptionValue);
-      removePromp()
-      createItemBtn()
+      removePromp();
+      createItemBtn();
     });
 
     const main = document.querySelector("main");
     addItemContainer.append(itemTitle, itemDescription, sumbitBtn);
     main.append(addItemContainer);
   }
-  
-  function removePromp() {
-    const itemContainer = document.querySelector(".addItemContainer")
-    itemContainer.remove()
-  }
-
   return { itemPrompt };
 })();
+
+////////////////-------------------//////////
+
+const domItemMethods = (() => {
+  
+  function printItem() {
+
+  }
+
+ })();
+////////////////-------------------//////////
 
 const itemMethods = (() => {
   function createItem(title, description, checklist) {
@@ -66,3 +79,5 @@ const itemMethods = (() => {
 
   return { createItem };
 })();
+
+////////////////-------------------//////////
