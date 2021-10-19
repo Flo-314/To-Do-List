@@ -4,6 +4,16 @@ const itemFactory = (title, description, checklist, priority, dueDate) => {
 let array = [];
 
 const domMethods = (() => {
+  function createItemBtn() {
+    const main = document.querySelector("main")
+    const itemBtn = document.createElement("button")
+    itemBtn.setAttribute("id", "itemBtn");
+    itemBtn.addEventListener("click", () => itemPrompt());
+
+    main.appendChild(itemBtn)
+  }
+
+
   const itemBtn = document.querySelector("#itemBtn");
   itemBtn.addEventListener("click", () => itemPrompt());
 
@@ -25,16 +35,25 @@ const domMethods = (() => {
 
     const sumbitBtn = document.createElement("button");
     sumbitBtn.textContent = "Add new Task!";
+
     sumbitBtn.addEventListener("click", () => {
       let descriptionValue = itemDescription.value;
       let titleValue = itemTitle.value;
       itemMethods.createItem(titleValue, descriptionValue);
+      removePromp()
+      createItemBtn()
     });
 
     const main = document.querySelector("main");
     addItemContainer.append(itemTitle, itemDescription, sumbitBtn);
     main.append(addItemContainer);
   }
+  
+  function removePromp() {
+    const itemContainer = document.querySelector(".addItemContainer")
+    itemContainer.remove()
+  }
+
   return { itemPrompt };
 })();
 
