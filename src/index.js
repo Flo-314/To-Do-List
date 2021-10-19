@@ -47,6 +47,7 @@ const promptMethods = (() => {
     sumbitBtn.addEventListener("click", () => {
       let descriptionValue = itemDescription.value;
       let titleValue = itemTitle.value;
+      domItemMethods.printItem(title,descriptionValue)
       itemMethods.createItem(titleValue, descriptionValue);
       removePromp();
       createItemBtn();
@@ -62,10 +63,36 @@ const promptMethods = (() => {
 ////////////////-------------------//////////
 
 const domItemMethods = (() => {
-  
-  function printItem() {
+  function printArray (){
+  array.forEach(item => {
+      printItem()
+    });
 
   }
+  function printItem(title,description,duedate,checklist) {
+    const main = document.querySelector("main")
+    const item = document.createElement("div")
+    const leftContainer = document.createElement("div")
+    const itemTitle = document.createElement("div")
+    const itemDescription = document.createElement("div")
+    const rightContainer = document.createElement("div")
+    const itemCheckList = document.createElement("div")
+    const itemDueDate = document.createElement("div")
+
+    itemTitle.textContent = title
+    itemDescription.textContent = description
+    itemDueDate.textContent = duedate
+
+    leftContainer.append(itemTitle,itemDescription)
+    rightContainer.append(itemCheckList,itemDueDate)
+    item.append(leftContainer,rightContainer)
+    main.appendChild(item)
+  } 
+
+function expandItem(){
+
+ }
+  return{printArray,printItem}
 
  })();
 ////////////////-------------------//////////

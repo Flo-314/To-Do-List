@@ -4,6 +4,7 @@ body {
   color: white;
   text-decoration: none;
   list-style-type: none;
+  font-family: Arial, Helvetica, sans-serif;
 }
 li,
 ul {
@@ -54,13 +55,13 @@ aside ul {
 aside li {
   margin: 16px;
 }
-hr{
+aside hr {
   height: 2px;
   margin: px;
   border-radius: 6px;
   background-color: rgb(44, 105, 179);
   width: 40%;
-  border: none
+  border: none;
 }
 aside .sub-title {
   margin-top: 16px;
@@ -85,34 +86,64 @@ main {
 #main-title {
   font-size: 25px;
   font-weight: 600;
-  margin-left: 50px;
-  padding: 25px;
-}
-main ul {
-  font-size: 16px;
+  margin: 30px;
   margin-left: 50px;
 }
-main li {
-  margin-top: 16px;
+main hr {
+  width: 200%;
+  margin-top: 15px;
 }
-main .item{
+main .item {
+ display: grid;
+ grid-template-areas:
+ " left-container right-container";
+grid-template-rows: auto;
+grid-template-columns: 1fr 1fr;
+  width: 50%;
+  margin: 40px;
+  margin-left: 50px;
+}
+main .left-container{
+  display: flex;
+  flex-direction: column;
+  grid-area: left-container;
+}
+main .right-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: right-container;
+}
+main .item-title {
   font-size: 18px;
-  width: 75%;
-  min-height: 50px;
-  padding: 15px;
-  background-color: rgb(65, 65, 65);
+  font-weight: 500;
+  padding-top: 5px;
+  margin: 5px;
+  max-height: 20px;
 }
-main #itemBtn{
-  width: 25%;
-  min-height:  34px;
-margin-left: 32%;
+main .item-description {
+  color: rgb(200, 200, 200);
+  font-size: 15px;
+  margin: 5px;
 }
-main input{
-  margin: 2px;
-width: 90%;
-height: 50%;
+main .item-duedate {
+  margin: 5px;
 }
-main .addItemContainer{
+main .item-checklist{
+margin: 5px;
+width: 45px;
+height: 45px;
+border-radius: 50%;
+border: 3px solid white;
+}
+
+main #itemBtn {
+  width: 50%;
+  min-height: 34px;
+  margin-left: 50px;
+}
+
+main .addItemContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
