@@ -4,7 +4,6 @@ const itemFactory = (title, description, checklist, priority, dueDate) => {
 
 let array = [];
 
-////////////////-------------------//////////
 
 const promptMethods = (() => {
   createItemBtn();
@@ -47,8 +46,13 @@ const promptMethods = (() => {
     sumbitBtn.addEventListener("click", () => {
       let descriptionValue = itemDescription.value;
       let titleValue = itemTitle.value;
-      domItemMethods.printItem(title,descriptionValue)
+
+
+
+
+
       itemMethods.createItem(titleValue, descriptionValue);
+      domItemMethods.printItem(titleValue,descriptionValue)
       removePromp();
       createItemBtn();
     });
@@ -60,7 +64,6 @@ const promptMethods = (() => {
   return { itemPrompt };
 })();
 
-////////////////-------------------//////////
 
 const domItemMethods = (() => {
   function printArray (){
@@ -70,14 +73,23 @@ const domItemMethods = (() => {
 
   }
   function printItem(title,description,duedate,checklist) {
-    const main = document.querySelector("main")
+    const itemContainer = document.querySelector("#item-container")
     const item = document.createElement("div")
+    item.classList.add("item")
     const leftContainer = document.createElement("div")
+    leftContainer.classList.add("left-container")
     const itemTitle = document.createElement("div")
+    itemTitle.classList.add("item-title")
     const itemDescription = document.createElement("div")
+    itemDescription.classList.add("item-description")
     const rightContainer = document.createElement("div")
+    rightContainer.classList.add("right-container")
     const itemCheckList = document.createElement("div")
+    itemCheckList.classList.add("item-checklist")
     const itemDueDate = document.createElement("div")
+    itemDueDate.classList.add("item-duedate")
+    const hr = document.createElement("hr")
+
 
     itemTitle.textContent = title
     itemDescription.textContent = description
@@ -85,8 +97,8 @@ const domItemMethods = (() => {
 
     leftContainer.append(itemTitle,itemDescription)
     rightContainer.append(itemCheckList,itemDueDate)
-    item.append(leftContainer,rightContainer)
-    main.appendChild(item)
+    item.append(leftContainer,rightContainer,hr)
+    itemContainer.appendChild(item)
   } 
 
 function expandItem(){
@@ -95,7 +107,6 @@ function expandItem(){
   return{printArray,printItem}
 
  })();
-////////////////-------------------//////////
 
 const itemMethods = (() => {
   function createItem(title, description, checklist) {
@@ -107,4 +118,3 @@ const itemMethods = (() => {
   return { createItem };
 })();
 
-////////////////-------------------//////////
