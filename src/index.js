@@ -35,26 +35,17 @@ const mainMethods = (() => {
   return { printMain, deleteMain };
 })();
 
-//refactear el title
 const sidebarMethods = (() => {
  
-  function addListener(title) {
-    const project = document.querySelector("." + title+"Btn");
+  function addListener(projectTitle) {
+    const project = document.querySelector("." + projectTitle+"Btn");
     project.addEventListener("click", () => {
-      mainMethods.printMain(title);
+      mainMethods.printMain(projectTitle);
     });
   }
-  
-  addListener("Home")
-  addListener("Today")
-  addListener("Week")
-
-
-  /*
-  
-  addListener(Home)
-  addListener(Today)
-  addListener(Week)  */
+  function createProjectBtn(){}
+  function removeProjectprompt(){}
+  function projectPrompt(){}
   return{}
  
 })();
