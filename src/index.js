@@ -42,8 +42,6 @@ const sidebarMethods = (() => {
   todayBtn.addEventListener("click", () => {
     let title = todayBtn.textContent;
     mainMethods.printMain(title);
-
-
   });
 
   const weekBtn = document.querySelector("#weekBtn");
@@ -114,9 +112,11 @@ const promptMethods = (() => {
 
 const domItemMethods = (() => {
   function printArray(title) {
-    array = itemMethods.title
-    itemMethods.title.forEach((item) => {
-      printItem(item.title, item.description, item.dueDate);
+    let project = itemMethods.projectsArray.find(
+      (project) => project.title === title
+    );
+    project.info.forEach((element) => {
+      printItem(element.title, element.description, element.duedate);
     });
   }
   function printItem(title, description, duedate, checklist) {
@@ -152,25 +152,33 @@ const domItemMethods = (() => {
 })();
 
 const itemMethods = (() => {
-
-  let arrays = [ ]
- 
- let home = [{title:"home",
-              array: [{project: "CUNinjam me tiene envidia",
-              description: "es un envidiso",
-              dueDate: "2021-10-30",}]}]
- 
- let today = [{project:"today",
- array: [{title: "CUNinjam me tiene envidia",
- description: "es un envidiso",
- dueDate: "2021-10-30",},{title: "CUNinjam me tiene envidia",
- description: "es un envidiso",
- dueDate: "2021-10-30",}]}]
-
-arrays.push(week)
-arrays.push(today)
-arrays.push(home)
-  console.log(arrays)
+  let projectsArray = [
+    {
+      title: "Home",
+      info: [
+        {
+          title: "CUNinjam me tiene envidia",
+          description: "es un envidiso",
+          dueDate: "2021-10-30",
+        },
+      ],
+    },
+    {
+      title: "Today",
+      info: [
+        {
+          title: "CUNinjam me tiene envidia",
+          description: "es un envidiso",
+          dueDate: "2021-10-30",
+        },
+        {
+          title: "CUNinjam me tiene envidia",
+          description: "es un envidiso",
+          dueDate: "2021-10-30",
+        },
+      ],
+    },
+  ];
 
   function createItem(title, description, dueDate, checkbox, array) {
     let newItem = itemFactory(title, description, dueDate, checkbox, array);
@@ -178,5 +186,5 @@ arrays.push(home)
     console.log(homeArray);
   }
 
-  return { createItem, home,today,week };
+  return { createItem, projectsArray };
 })();
