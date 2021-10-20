@@ -1,12 +1,12 @@
-const projectFactory = (projectTitle) => {
-  let info = []
-  return {projectTitle,info}
+const projectFactory = (projectInput) => {
+  let title = projectInput
+  let info = [];
+  return { title, info };
 };
 const itemFactory = (title, description, dueDate, priority, checklist) => {
   return { title, description, dueDate, priority, checklist };
 };
 
-let array = [];
 const mainMethods = (() => {
   function deleteMain() {
     const main = document.querySelector("main");
@@ -36,30 +36,66 @@ const mainMethods = (() => {
 })();
 
 const sidebarMethods = (() => {
- 
-  function addListener(projectTitle) {
-    const project = document.querySelector("." + projectTitle+"Btn");
+  function addListener(projectInput) {
+    const project = document.querySelector("." + projectInput + "Btn");
     project.addEventListener("click", () => {
-      mainMethods.printMain(projectTitle);
+      mainMethods.printMain(projectInput);
     });
   }
-  addListener("Home")
-  addListener("Today")
-  addListener("Week")
+  addListener("Home");
+  addListener("Today");
+  addListener("Week");
 
-function createProjectBtn(){
-  const projects = document.querySelector("#projects")
-  const projectBtn = document.createElement("button");
-  projectBtn.textContent = "Add New Project";
-  projectBtn.setAttribute("id", "newProjectBtn");
-  projectBtn.addEventListener("click", () => {});
-  projects.appendChild(projectBtn)
-}
-function projectPromp(){}
-function removeProjectPromp(){}
-createProjectBtn()
-  return{}
- 
+  function createProjectBtn() {
+    const projects = document.querySelector("#projects");
+    const projectBtn = document.createElement("button");
+    projectBtn.textContent = "Add New Project";
+    projectBtn.setAttribute("id", "newProjectBtn");
+    projectBtn.addEventListener("click", () => projectPromp());
+    projects.appendChild(projectBtn);
+  }
+  function projectPromp() {
+    
+    const projectBtn = document.querySelector("#newProjectBtn");
+    projectBtn.remove();
+
+    const projects = document.querySelector("#projects");
+
+    const addProjectContainer = document.createElement("div");
+    addProjectContainer.classList.add("addProjectContainer");
+
+    const projectInput = document.createElement("input");
+    projectInput.type = "text";
+    projectInput.placeholder = "Project Title";
+    projectInput.classList.add("projectInput");
+
+    const sumbitProjectBtn = document.createElement("button");
+    sumbitProjectBtn.classList.add("sumbitProjectBtn");
+    sumbitProjectBtn.textContent = "Sumbit Project";
+
+    sumbitProjectBtn.addEventListener("click", () => {
+      
+      let projectTitle = projectInput.value;
+      console.log(itemMethods.projectsArray)
+      
+      itemMethods.createProject(projectTitle);
+      removeProjectPromp();
+      createProjectBtn();
+      printProjects()
+    });
+
+    addProjectContainer.append(projectInput, sumbitProjectBtn);
+    projects.appendChild(addProjectContainer);
+  }
+  function removeProjectPromp() {
+    const addProjectContainer = document.querySelector(".addProjectContainer");
+    addProjectContainer.remove();
+  }
+  function printProjectArray(){}
+  function printNewProject(){}
+
+  createProjectBtn();
+  return {};
 })();
 
 const promptMethods = (() => {
@@ -73,7 +109,7 @@ const promptMethods = (() => {
     main.appendChild(itemBtn);
   }
 
-  function removePromp() {
+  function removeItemPromp() {
     const itemContainer = document.querySelector(".addItemContainer");
     itemContainer.remove();
   }
@@ -108,7 +144,7 @@ const promptMethods = (() => {
 
       itemMethods.createItem(titleValue, descriptionValue, dueDateValue);
       domItemMethods.printItem(titleValue, descriptionValue, dueDateValue);
-      removePromp();
+      removeItemPromp();
       createItemBtn();
     });
 
@@ -121,8 +157,8 @@ const promptMethods = (() => {
 
 const domItemMethods = (() => {
   function printArray(title) {
-    let project = itemMethods.findProject(title)
-    
+    let project = itemMethods.findProject(title);
+
     if (project !== undefined) {
       project.info.forEach((element) => {
         printItem(element.title, element.description, element.dueDate);
@@ -165,8 +201,7 @@ const itemMethods = (() => {
   let projectsArray = [
     {
       title: "Home",
-      info: [
-],
+      info: [],
     },
     {
       title: "Today",
@@ -180,19 +215,19 @@ const itemMethods = (() => {
 
   function createItem(title, description, dueDate, checkbox, array) {
     let newItem = itemFactory(title, description, dueDate, checkbox, array);
-    let projectTitle = document.querySelector("#main-title").textContent
-    let project = findProject(projectTitle)
-    project.info.push(newItem)
+    let ProjectTitle = document.querySelector("#main-title").textContent;
+    let project = findProject(ProjectTitle);
+    project.info.push(newItem);
   }
-  function findProject (ProjectTitle){
-     let project = projectsArray.find(
+  function findProject(ProjectTitle) {
+    let project = projectsArray.find(
       (project) => project.title === ProjectTitle
     );
-    return project
+    return project;
   }
-  function createProject(ProjectTitle){
-    let newProject = projectFactory(ProjectTitle)
-    return{newProject}
+  function createProject(projectTitle) {
+    let newProject = projectFactory(projectTitle)
+    projectsArray.push(newProject);
   }
 
   return { createItem, findProject, createProject, projectsArray };
