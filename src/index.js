@@ -36,10 +36,10 @@ const mainMethods = (() => {
 })();
 
 const sidebarMethods = (() => {
-  function addListener(projectInput) {
-    const project = document.querySelector("." + projectInput + "Btn");
+  function addListener(projectTitle) {
+    const project = document.querySelector("." + projectTitle );
     project.addEventListener("click", () => {
-      mainMethods.printMain(projectInput);
+      mainMethods.printMain(projectTitle);
     });
   }
   addListener("Home");
@@ -74,7 +74,7 @@ const sidebarMethods = (() => {
 
     sumbitProjectBtn.addEventListener("click", () => {
       let projectTitle = projectInput.value;
-
+      itemMethods.createProject(projectTitle)
       removeProjectPromp();
       createProjectBtn();
       projectMethods.printProjectArray(projectTitle); 
@@ -98,11 +98,12 @@ const projectMethods = (() => {
     const projectList = document.querySelector("#projectsList")
     const project = document.createElement("li")
     project.classList.add("project")
-    project.classList.add(projectTitle + "Btn")
     project.textContent =  projectTitle
+    project.addEventListener("click", () => {
+      mainMethods.printMain(projectTitle);
+    });
 
     projectList.appendChild(project)  
-     sidebarMethods.addListener(projectTitle)
 
 
     //    const project = document.querySelector("." + projectInput + "Btn");
@@ -228,6 +229,7 @@ const itemMethods = (() => {
   ];
 
   function createItem(title, description, dueDate, checkbox, array) {
+    console.log(projectsArray)
     let newItem = itemFactory(title, description, dueDate, checkbox, array);
     let ProjectTitle = document.querySelector("#main-title").textContent;
     let project = findProject(ProjectTitle);
