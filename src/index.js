@@ -1,5 +1,5 @@
 const projectFactory = (projectInput) => {
-  let title = projectInput
+  let title = projectInput;
   let info = [];
   return { title, info };
 };
@@ -55,8 +55,7 @@ const sidebarMethods = (() => {
     projects.appendChild(projectBtn);
   }
   function projectPromp() {
-    
-    const projectBtn = document.querySelector("#newProjectBtn");
+     const projectBtn = document.querySelector("#newProjectBtn");
     projectBtn.remove();
 
     const projects = document.querySelector("#projects");
@@ -74,16 +73,13 @@ const sidebarMethods = (() => {
     sumbitProjectBtn.textContent = "Sumbit Project";
 
     sumbitProjectBtn.addEventListener("click", () => {
-      
       let projectTitle = projectInput.value;
-      console.log(itemMethods.projectsArray)
-      
-      itemMethods.createProject(projectTitle);
+
       removeProjectPromp();
       createProjectBtn();
-      printProjects()
+      projectMethods.printProjectArray(projectTitle); 
     });
-
+ 
     addProjectContainer.append(projectInput, sumbitProjectBtn);
     projects.appendChild(addProjectContainer);
   }
@@ -91,11 +87,29 @@ const sidebarMethods = (() => {
     const addProjectContainer = document.querySelector(".addProjectContainer");
     addProjectContainer.remove();
   }
-  function printProjectArray(){}
-  function printNewProject(){}
+
 
   createProjectBtn();
-  return {};
+  return {addListener};
+})();
+
+const projectMethods = (() => {
+  function printProjectArray(projectTitle) {
+    const projectList = document.querySelector("#projectsList")
+    const project = document.createElement("li")
+    project.classList.add("project")
+    project.classList.add(projectTitle + "Btn")
+    project.textContent =  projectTitle
+
+    projectList.appendChild(project)  
+     sidebarMethods.addListener(projectTitle)
+
+
+    //    const project = document.querySelector("." + projectInput + "Btn");
+
+  }
+  function printNewProject() {}
+  return{printProjectArray, printNewProject}
 })();
 
 const promptMethods = (() => {
@@ -226,7 +240,7 @@ const itemMethods = (() => {
     return project;
   }
   function createProject(projectTitle) {
-    let newProject = projectFactory(projectTitle)
+    let newProject = projectFactory(projectTitle);
     projectsArray.push(newProject);
   }
 
