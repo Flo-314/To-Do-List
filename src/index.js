@@ -6,7 +6,6 @@ const projectFactory = (projectInput) => {
 const itemFactory = (title, description, dueDate, priority, checklist) => {
   return { title, description, dueDate, priority, checklist };
 };
-
 const mainMethods = (() => {
   function deleteMain() {
     const main = document.querySelector("main");
@@ -37,7 +36,7 @@ const mainMethods = (() => {
 
 const sidebarMethods = (() => {
   function addListener(projectTitle) {
-    const project = document.querySelector("." + projectTitle );
+    const project = document.querySelector("." + projectTitle);
     project.addEventListener("click", () => {
       mainMethods.printMain(projectTitle);
     });
@@ -55,7 +54,7 @@ const sidebarMethods = (() => {
     projects.appendChild(projectBtn);
   }
   function projectPromp() {
-     const projectBtn = document.querySelector("#newProjectBtn");
+    const projectBtn = document.querySelector("#newProjectBtn");
     projectBtn.remove();
 
     const projects = document.querySelector("#projects");
@@ -74,12 +73,12 @@ const sidebarMethods = (() => {
 
     sumbitProjectBtn.addEventListener("click", () => {
       let projectTitle = projectInput.value;
-      itemMethods.createProject(projectTitle)
+      itemMethods.createProject(projectTitle);
       removeProjectPromp();
       createProjectBtn();
-      projectMethods.printProjectArray(projectTitle); 
+      projectMethods.printNewProject(projectTitle);
     });
- 
+
     addProjectContainer.append(projectInput, sumbitProjectBtn);
     projects.appendChild(addProjectContainer);
   }
@@ -88,31 +87,26 @@ const sidebarMethods = (() => {
     addProjectContainer.remove();
   }
 
-
   createProjectBtn();
-  return {addListener};
+  return { addListener };
 })();
-
 const projectMethods = (() => {
-  function printProjectArray(projectTitle) {
-    const projectList = document.querySelector("#projectsList")
-    const project = document.createElement("li")
-    project.classList.add("project")
-    project.textContent =  projectTitle
+  
+  
+  function printNewProject(projectTitle) {
+    const projectList = document.querySelector("#projectsList");
+    const project = document.createElement("li");
+    project.classList.add("project");
+    project.textContent = projectTitle;
     project.addEventListener("click", () => {
       mainMethods.printMain(projectTitle);
     });
 
-    projectList.appendChild(project)  
-
-
-    //    const project = document.querySelector("." + projectInput + "Btn");
-
+    projectList.appendChild(project);
   }
-  function printNewProject() {}
-  return{printProjectArray, printNewProject}
+  function printStoredProjects() {}
+  return { printStoredProjects, printNewProject };
 })();
-
 const promptMethods = (() => {
   function createItemBtn() {
     const main = document.querySelector("main");
@@ -229,7 +223,7 @@ const itemMethods = (() => {
   ];
 
   function createItem(title, description, dueDate, checkbox, array) {
-    console.log(projectsArray)
+    console.log(projectsArray);
     let newItem = itemFactory(title, description, dueDate, checkbox, array);
     let ProjectTitle = document.querySelector("#main-title").textContent;
     let project = findProject(ProjectTitle);
