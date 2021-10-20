@@ -1,3 +1,7 @@
+const projectFactory = (projectTitle) => {
+  let info = []
+  return {projectTitle,info}
+};
 const itemFactory = (title, description, dueDate, priority, checklist) => {
   return { title, description, dueDate, priority, checklist };
 };
@@ -26,34 +30,36 @@ const mainMethods = (() => {
     const mainTitle = document.querySelector("#main-title");
     mainTitle.textContent = title;
     domItemMethods.printArray(title);
+    promptMethods.createItemBtn();
   }
   return { printMain, deleteMain };
 })();
 
 //refactear el title
 const sidebarMethods = (() => {
-  const homeBtn = document.querySelector("#homeBtn");
-  homeBtn.addEventListener("click", () => {
-    let title = homeBtn.textContent;
-    mainMethods.printMain(title);
-  });
+ 
+  function addListener(title) {
+    const project = document.querySelector("." + title+"Btn");
+    project.addEventListener("click", () => {
+      mainMethods.printMain(title);
+    });
+  }
+  
+  addListener("Home")
+  addListener("Today")
+  addListener("Week")
 
-  const todayBtn = document.querySelector("#todayBtn");
-  todayBtn.addEventListener("click", () => {
-    let title = todayBtn.textContent;
-    mainMethods.printMain(title);
-  });
 
-  const weekBtn = document.querySelector("#weekBtn");
-  weekBtn.addEventListener("click", () => {
-    let title = weekBtn.textContent;
-    mainMethods.printMain(title);
-  });
+  /*
+  
+  addListener(Home)
+  addListener(Today)
+  addListener(Week)  */
+  return{}
+ 
 })();
 
 const promptMethods = (() => {
-  createItemBtn();
-
   function createItemBtn() {
     const main = document.querySelector("main");
     const itemBtn = document.createElement("button");
@@ -107,17 +113,18 @@ const promptMethods = (() => {
     addItemContainer.append(itemTitle, itemDescription, dueDate, sumbitBtn);
     main.append(addItemContainer);
   }
-  return { itemPrompt };
+  return { createItemBtn };
 })();
 
 const domItemMethods = (() => {
   function printArray(title) {
-    let project = itemMethods.projectsArray.find(
-      (project) => project.title === title
-    );
-    project.info.forEach((element) => {
-      printItem(element.title, element.description, element.duedate);
-    });
+    let project = itemMethods.findProject(title)
+    
+    if (project !== undefined) {
+      project.info.forEach((element) => {
+        printItem(element.title, element.description, element.dueDate);
+      });
+    }
   }
   function printItem(title, description, duedate, checklist) {
     const itemContainer = document.querySelector("#item-container");
@@ -182,9 +189,21 @@ const itemMethods = (() => {
 
   function createItem(title, description, dueDate, checkbox, array) {
     let newItem = itemFactory(title, description, dueDate, checkbox, array);
-    homeArray.push(newItem);
-    console.log(homeArray);
+    let projectTitle = document.querySelector("#main-title").textContent
+    let project = findProject(projectTitle)
+    project.info.push(newItem)
+  }
+  function findProject (ProjectTitle){
+     let project = projectsArray.find(
+      (project) => project.title === ProjectTitle
+    );
+    return project
+  }
+  function createProject(ProjectTitle){
+    let newProject = projectFactory(ProjectTitle)
+    return{newProject}
   }
 
-  return { createItem, projectsArray };
+  return { createItem, findProject, createProject, projectsArray };
 })();
+mainMethods.printMain("Home");
