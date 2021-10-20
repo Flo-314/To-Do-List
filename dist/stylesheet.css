@@ -33,7 +33,7 @@ header {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: rgb(28, 24, 24);
+  background-color: rgb(24, 24, 24);
   grid-area: header;
 }
 aside {
@@ -52,7 +52,6 @@ aside ul {
   justify-content: center;
   flex-direction: column;
   margin-top: 20px;
-  font-weight: 600;
 }
 aside li {
   margin: 16px;
@@ -83,6 +82,28 @@ aside #projects {
   flex-direction: column;
   justify-content: center;
 }
+aside .project{
+  font-weight: 0;
+}
+aside #newProjectBtn{
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 25px;
+  min-height: 40px;
+  width: 150%;
+  background-color: rgb(36, 36, 36);
+  font-weight: 600;
+  transition: all 0.5s;
+}
+aside #newProjectBtn:hover{
+  color: #e6bb4d;
+  transform: scale(1.1);
+  transition: all 0.5s;
+  background-color: rgb(55, 55, 55);
+
+}
+
 
 main {
   display: flex;
@@ -147,9 +168,23 @@ border: 3px solid white;
 }
 
 main #itemBtn {
+  border:none;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 20px;
+  color: white;
   width: 50%;
-  min-height: 34px;
+  min-height: 40px;
   margin-left: 50px;
+  background-color: rgb(43, 43, 43);
+  transition: all 0.5s;
+}
+main #itemBtn:hover{
+  color: #e6bb4d;
+  transform: scale(1.1);
+  transition: all 0.5s;
+  background-color: rgb(55, 55, 55);
+
 }
 
 main .addItemContainer {

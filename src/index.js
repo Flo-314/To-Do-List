@@ -47,10 +47,17 @@ const sidebarMethods = (() => {
   addListener("Today")
   addListener("Week")
 
-function createProjectBtn(){}
+function createProjectBtn(){
+  const projects = document.querySelector("#projects")
+  const projectBtn = document.createElement("button");
+  projectBtn.textContent = "Add New Project";
+  projectBtn.setAttribute("id", "newProjectBtn");
+  projectBtn.addEventListener("click", () => {});
+  projects.appendChild(projectBtn)
+}
 function projectPromp(){}
 function removeProjectPromp(){}
-
+createProjectBtn()
   return{}
  
 })();
