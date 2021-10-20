@@ -103,7 +103,33 @@ aside #newProjectBtn:hover{
   background-color: rgb(55, 55, 55);
 
 }
-
+aside .addProjectContainer{
+    display: flex;
+    flex-direction: column;
+}
+aside  button{
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 25px;
+  min-height: 40px;
+  background-color: rgb(36, 36, 36);
+  font-weight: 500;
+  transition: all 0.5s;
+  margin: 10px;
+}
+aside  button:hover{
+  color: #e6bb4d;
+  transform: scale(1.1);
+  transition: all 0.5s;
+  background-color: rgb(55, 55, 55);
+}
+ input{
+  background-color: #d9d9d9;
+border: none;
+border-radius: 8px;
+margin: 5px;
+}
 
 main {
   display: flex;
@@ -192,12 +218,27 @@ main .addItemContainer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  margin-left: 50px;
-  border: 2px solid black;
+  max-width: 250px;
+  max-height: 360px;
+  margin-left: 19%;
+}
+.addItemContainer  button{
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 25px;
+  min-height: 40px;
   width: 75%;
-  min-height: 50px;
-  height: 12%;
+  background-color: rgb(43, 43, 43);
+  font-weight: 500;
+  transition: all 0.5s;
+  margin: 10px;
+}
+.addItemContainer  button:hover{
+  color: #e6bb4d;
+  transform: scale(1.1);
+  transition: all 0.5s;
+  background-color: rgb(55, 55, 55);
 }
 footer {
   display: flex;
