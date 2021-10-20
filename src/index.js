@@ -43,9 +43,14 @@ const sidebarMethods = (() => {
       mainMethods.printMain(projectTitle);
     });
   }
-  function createProjectBtn(){}
-  function removeProjectprompt(){}
-  function projectPrompt(){}
+  addListener("Home")
+  addListener("Today")
+  addListener("Week")
+
+function createProjectBtn(){}
+function projectPromp(){}
+function removeProjectPromp(){}
+
   return{}
  
 })();
@@ -154,27 +159,15 @@ const itemMethods = (() => {
     {
       title: "Home",
       info: [
-        {
-          title: "CUNinjam me tiene envidia",
-          description: "es un envidiso",
-          dueDate: "2021-10-30",
-        },
-      ],
+],
     },
     {
       title: "Today",
-      info: [
-        {
-          title: "CUNinjam me tiene envidia",
-          description: "es un envidiso",
-          dueDate: "2021-10-30",
-        },
-        {
-          title: "CUNinjam me tiene envidia",
-          description: "es un envidiso",
-          dueDate: "2021-10-30",
-        },
-      ],
+      info: [],
+    },
+    {
+      title: "Week",
+      info: [],
     },
   ];
 
