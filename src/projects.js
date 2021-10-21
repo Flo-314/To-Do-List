@@ -21,7 +21,8 @@ const projectMethods = (() => {
     {
       title: "TEste 1 ",
       info: [],
-    }, {
+    },
+    {
       title: "teste 2 ",
       info: [],
     },
@@ -31,13 +32,14 @@ const projectMethods = (() => {
     let project = projectsArray.find(
       (project) => project.title === ProjectTitle
     );
+
     return project;
   }
   function createProject(projectTitle) {
     let newProject = projectFactory(projectTitle);
     projectsArray.push(newProject);
   }
-  return { findProject, createProject,projectsArray };
+  return { findProject, createProject, projectsArray };
 })();
 
 export { projectFactory, projectMethods };
