@@ -177,6 +177,10 @@ border-radius: 50%;
 border: 3px solid white;
 }
 
+.checked{
+  background-color: green;
+}
+
 main #itemBtn {
   border:none;
   font-size: 18px;
@@ -186,6 +190,7 @@ main #itemBtn {
   width: 50%;
   min-height: 40px;
   margin-left: 50px;
+  margin-bottom: 150px;
   background-color: rgb(43, 43, 43);
   transition: all 0.5s;
 }
@@ -204,6 +209,7 @@ main .addItemContainer {
   align-items: center;
   max-width: 250px;
   max-height: 360px;
+  margin-bottom: 150px;
   margin-left: 19%;
 }
 .addItemContainer  button{

@@ -1,5 +1,5 @@
-import { projectMethods,projectFactory } from "./projects.js";
-import { itemFactory,itemMethods } from "./items.js";
+import { projectMethods, projectFactory } from "./projects.js";
+import { itemFactory, itemMethods } from "./items.js";
 
 const mainMethods = (() => {
   function deleteMain() {
@@ -27,40 +27,38 @@ const mainMethods = (() => {
     createMainBody();
     const mainTitle = document.querySelector("#main-title");
     mainTitle.textContent = title;
-    domItemMethods.printProject(title);
+    domProjectMethods.printProjectInMain(title);
     promptMethods.createItemBtn();
   }
-  function printMainHome(){
+  function printMainHome() {
     deleteMain();
     createMainBody();
     const mainTitle = document.querySelector("#main-title");
     mainTitle.textContent = "Home";
-    domItemMethods.printHomeItems()
+    domItemMethods.printHomeItems();
     promptMethods.createItemBtn();
   }
-  return { printMain, deleteMain,printMainHome };
+  return { printMain, deleteMain, printMainHome };
 })();
 
 const sidebarMethods = (() => {
   function addListener(projectTitle) {
     const project = document.querySelector("." + projectTitle);
-    if(projectTitle !== "Home"){
-    project.addEventListener("click", () => {
-      mainMethods.printMain(projectTitle);
-    });}
-    else{
+    if (projectTitle !== "Home") {
+      project.addEventListener("click", () => {
+        mainMethods.printMain(projectTitle);
+      });
+    } else {
       project.addEventListener("click", () => {
         mainMethods.printMainHome();
-      })
-      
-      
+      });
     }
   }
 
   function createProjectBtn() {
     const projects = document.querySelector("#projects");
     const projectBtn = document.createElement("button");
-    
+
     projectBtn.textContent = "Add New Project";
     projectBtn.setAttribute("id", "newProjectBtn");
     projectBtn.addEventListener("click", () => projectPromp());
@@ -73,7 +71,7 @@ const sidebarMethods = (() => {
     projectBtn.remove();
 
     const projects = document.querySelector("#projects");
-   
+
     const addProjectContainer = document.createElement("div");
     addProjectContainer.classList.add("addProjectContainer");
 
@@ -91,7 +89,7 @@ const sidebarMethods = (() => {
       projectMethods.createProject(projectTitle);
       removeProjectPromp();
       createProjectBtn();
-      projectDom.printNewProject(projectTitle);
+      domProjectMethods.printProject(projectTitle);
     });
 
     addProjectContainer.append(projectInput, sumbitProjectBtn);
@@ -109,22 +107,6 @@ const sidebarMethods = (() => {
   createProjectBtn();
 
   return { addListener };
-})();
-
-const projectDom = (() => {
-  function printNewProject(projectTitle) {
-    const projectList = document.querySelector("#projectsList");
-    const project = document.createElement("li");
-    project.classList.add("project");
-    project.textContent = projectTitle;
-    project.addEventListener("click", () => {
-      mainMethods.printMain(projectTitle);
-    });
-
-    projectList.appendChild(project);
-  }
-  function printStoredProjects() {}
-  return { printStoredProjects, printNewProject };
 })();
 
 const promptMethods = (() => {
@@ -185,62 +167,123 @@ const promptMethods = (() => {
 })();
 
 const domItemMethods = (() => {
-  
-  function printHomeItems(){
-    let homeArray = projectMethods.projectsArray
-    console.log(homeArray)
-    homeArray.forEach(project => {
-      let projectItems = project.info
-      console.log(projectItems)
+  function printHomeItems() {
+    let homeArray = projectMethods.projectsArray;
+    homeArray.forEach((project) => {
+      let projectItems = project.info;
 
-      projectItems.forEach(item => {
+      projectItems.forEach((item) => {
         printItem(item.title, item.description, item.dueDate);
-        console.log(projectItems)
       });
     });
   }
 
-  function printProject(title) {
+  function printItem(title, description, duedate, checklist) {
+    const projectTitle = document.querySelector("#main-title").textContent;
+    const itemContainer = document.querySelector("#item-container");
+    const item = document.createElement("div");
+    item.classList.add("item");
+
+    const leftContainer = document.createElement("div");
+    leftContainer.classList.add("left-container");
+
+    const itemTitle = document.createElement("div");
+    itemTitle.classList.add("item-title");
+    itemTitle.textContent = title;
+
+    const itemDescription = document.createElement("div");
+    itemDescription.classList.add("item-description");
+    itemDescription.textContent = description;
+
+    const rightContainer = document.createElement("div");
+    rightContainer.classList.add("right-container");
+
+    const checklistItem = document.createElement("div");
+    checklistItem.classList.add("item-checklist");
+    if (checklist !== "checked") {
+      checklistItem.classList.add("unchecked");
+      checklistItem.addEventListener("click", () => {
+        checkboxOffListener(checklistItem, title, projectTitle);
+      });
+    } else {
+      checklistItem.classList.add("checked");
+      checkboxOnListener(checklistItem, title, projectTitle);
+    }
+
+    const itemDueDate = document.createElement("div");
+    itemDueDate.classList.add("item-duedate");
+    itemDueDate.textContent = duedate;
+
+    const hr = document.createElement("hr");
+
+    leftContainer.append(itemTitle, itemDescription);
+    rightContainer.append(checklistItem, itemDueDate);
+    item.append(leftContainer, rightContainer, hr);
+    itemContainer.appendChild(item);
+  }
+
+  function checkboxOnListener(checklistItem, itemTitle, projectTitle) {
+    checklistItem.classList.remove("checked");
+    checklistItem.classList.add("unchecked");
+    let item = itemMethods.findItem(projectTitle, itemTitle);
+    item.checklist = "unchecked";
+
+    checklistItem.addEventListener("click" , () => checkboxOffListener(checklistItem, itemTitle, projectTitle))
+  }
+
+  function checkboxOffListener(checklistItem, itemTitle, projectTitle) {
+    checklistItem.classList.remove("unchecked");
+    checklistItem.classList.add("checked");
+    let item = itemMethods.findItem(projectTitle, itemTitle);
+    item.checklist = "checked";
+    checklistItem.addEventListener("click" , () => checkboxOnListener(checklistItem, itemTitle, projectTitle))
+
+  }
+
+  function expandItemListener() {}
+
+  return { printItem, printHomeItems };
+})();
+
+const domProjectMethods = (() => {
+  function printProject(projectTitle) {
+    const projectList = document.querySelector("#projectsList");
+    const project = document.createElement("li");
+    project.classList.add("project");
+    project.textContent = projectTitle;
+    project.addEventListener("click", () => {
+      mainMethods.printMain(projectTitle);
+    });
+
+    projectList.appendChild(project);
+  }
+  function printProjectInMain(title) {
     let project = projectMethods.findProject(title);
 
     if (project !== undefined) {
       project.info.forEach((element) => {
-        printItem(element.title, element.description, element.dueDate);
+        domItemMethods.printItem(
+          element.title,
+          element.description,
+          element.dueDate
+        );
       });
     }
   }
-  
-  function printItem(title, description, duedate, checklist) {
-    const itemContainer = document.querySelector("#item-container");
-    const item = document.createElement("div");
-    item.classList.add("item");
-    const leftContainer = document.createElement("div");
-    leftContainer.classList.add("left-container");
-    const itemTitle = document.createElement("div");
-    itemTitle.classList.add("item-title");
-    const itemDescription = document.createElement("div");
-    itemDescription.classList.add("item-description");
-    const rightContainer = document.createElement("div");
-    rightContainer.classList.add("right-container");
-    const itemCheckList = document.createElement("div");
-    itemCheckList.classList.add("item-checklist");
-    const itemDueDate = document.createElement("div");
-    itemDueDate.classList.add("item-duedate");
-    const hr = document.createElement("hr");
 
-    itemTitle.textContent = title;
-    itemDescription.textContent = description;
-    itemDueDate.textContent = duedate;
-
-    leftContainer.append(itemTitle, itemDescription);
-    rightContainer.append(itemCheckList, itemDueDate);
-    item.append(leftContainer, rightContainer, hr);
-    itemContainer.appendChild(item);
+  function printStoredProjects() {
+    let projects = projectMethods.projectsArray;
+    projects.forEach((project) => {
+      if (
+        project.title !== "Home" &&
+        project.title !== "Week" &&
+        project.title !== "Today"
+      )
+        printProject(project.title);
+    });
   }
-  
 
-  function expandItem() {}
-  return { printProject, printItem,printHomeItems};
+  return { printProjectInMain, printStoredProjects, printProject };
 })();
 
 export {
@@ -249,4 +292,5 @@ export {
   projectMethods,
   promptMethods,
   domItemMethods,
+  domProjectMethods,
 };

@@ -18,6 +18,13 @@ const projectMethods = (() => {
       title: "Week",
       info: [],
     },
+    {
+      title: "TEste 1 ",
+      info: [],
+    }, {
+      title: "teste 2 ",
+      info: [],
+    },
   ];
 
   function findProject(ProjectTitle) {
