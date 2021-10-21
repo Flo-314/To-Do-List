@@ -30,7 +30,7 @@ const projectMethods = (() => {
     let newProject = projectFactory(projectTitle);
     projectsArray.push(newProject);
   }
-  return { findProject, createProject };
+  return { findProject, createProject,projectsArray };
 })();
 
 export { projectFactory, projectMethods };

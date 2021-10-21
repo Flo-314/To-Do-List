@@ -85,24 +85,7 @@ aside #projects {
 aside .project{
   font-weight: 0;
 }
-aside #newProjectBtn{
-  border: none;
-  color: white;
-  font-size: 18px;
-  border-radius: 25px;
-  min-height: 40px;
-  width: 150%;
-  background-color: rgb(36, 36, 36);
-  font-weight: 600;
-  transition: all 0.5s;
-}
-aside #newProjectBtn:hover{
-  color: #e6bb4d;
-  transform: scale(1.1);
-  transition: all 0.5s;
-  background-color: rgb(55, 55, 55);
 
-}
 aside .addProjectContainer{
     display: flex;
     flex-direction: column;
@@ -113,10 +96,11 @@ aside  button{
   font-size: 16px;
   border-radius: 25px;
   min-height: 40px;
+  width: 100%;
   background-color: rgb(36, 36, 36);
-  font-weight: 500;
   transition: all 0.5s;
   margin: 10px;
+  margin-bottom: 300px;
 }
 aside  button:hover{
   color: #e6bb4d;

@@ -23,25 +23,38 @@ const mainMethods = (() => {
   }
 
   function printMain(title) {
-    const main = document.querySelector("main");
     deleteMain();
     createMainBody();
     const mainTitle = document.querySelector("#main-title");
     mainTitle.textContent = title;
-    domItemMethods.printArray(title);
+    domItemMethods.printProject(title);
     promptMethods.createItemBtn();
   }
-
-  return { printMain, deleteMain };
+  function printMainHome(){
+    deleteMain();
+    createMainBody();
+    const mainTitle = document.querySelector("#main-title");
+    mainTitle.textContent = "Home";
+    domItemMethods.printHomeItems()
+    promptMethods.createItemBtn();
+  }
+  return { printMain, deleteMain,printMainHome };
 })();
 
 const sidebarMethods = (() => {
   function addListener(projectTitle) {
     const project = document.querySelector("." + projectTitle);
-
+    if(projectTitle !== "Home"){
     project.addEventListener("click", () => {
       mainMethods.printMain(projectTitle);
-    });
+    });}
+    else{
+      project.addEventListener("click", () => {
+        mainMethods.printMainHome();
+      })
+      
+      
+    }
   }
 
   function createProjectBtn() {
@@ -172,7 +185,22 @@ const promptMethods = (() => {
 })();
 
 const domItemMethods = (() => {
-  function printArray(title) {
+  
+  function printHomeItems(){
+    let homeArray = projectMethods.projectsArray
+    console.log(homeArray)
+    homeArray.forEach(project => {
+      let projectItems = project.info
+      console.log(projectItems)
+
+      projectItems.forEach(item => {
+        printItem(item.title, item.description, item.dueDate);
+        console.log(projectItems)
+      });
+    });
+  }
+
+  function printProject(title) {
     let project = projectMethods.findProject(title);
 
     if (project !== undefined) {
@@ -181,6 +209,7 @@ const domItemMethods = (() => {
       });
     }
   }
+  
   function printItem(title, description, duedate, checklist) {
     const itemContainer = document.querySelector("#item-container");
     const item = document.createElement("div");
@@ -208,9 +237,10 @@ const domItemMethods = (() => {
     item.append(leftContainer, rightContainer, hr);
     itemContainer.appendChild(item);
   }
+  
 
   function expandItem() {}
-  return { printArray, printItem };
+  return { printProject, printItem,printHomeItems};
 })();
 
 export {
