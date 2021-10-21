@@ -228,7 +228,9 @@ const domItemMethods = (() => {
     let item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "unchecked";
 
-    checklistItem.addEventListener("click" , () => checkboxOffListener(checklistItem, itemTitle, projectTitle))
+    checklistItem.addEventListener("click", () =>
+      checkboxOffListener(checklistItem, itemTitle, projectTitle)
+    );
   }
 
   function checkboxOffListener(checklistItem, itemTitle, projectTitle) {
@@ -236,8 +238,9 @@ const domItemMethods = (() => {
     checklistItem.classList.add("checked");
     let item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "checked";
-    checklistItem.addEventListener("click" , () => checkboxOnListener(checklistItem, itemTitle, projectTitle))
-
+    checklistItem.addEventListener("click", () =>
+      checkboxOnListener(checklistItem, itemTitle, projectTitle)
+    );
   }
 
   function expandItemListener() {}
