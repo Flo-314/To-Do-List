@@ -96,9 +96,9 @@ const promptMethods = (() => {
     addItemContainer.append(itemTitle, itemDescription, dueDate, sumbitBtn);
     main.append(addItemContainer);
   }
+
   return { createItemBtn };
 })();
-
 
 const printItemMethods = (() => {
   function printHomeItems() {
@@ -172,9 +172,8 @@ const printItemMethods = (() => {
         projectTitle
       );
     });
-
     const checklistItem = printChecklist(checklist, title, projectTitle);
-
+    printDeleteButton(projectTitle,title,item)
     const hr = document.createElement("hr");
 
     leftContainer.append(itemTitleContainer, itemDescriptionContainer);
@@ -233,6 +232,14 @@ const printItemMethods = (() => {
 
     return checklistItem;
   }
+  function printDeleteButton(projectTitle, title, itemContainer) {
+    const deleteBtn = document.createElement("button");
+    itemContainer.appendChild(deleteBtn);
+    deleteBtn.textContent = "Delete Item"
+    deleteBtn.addEventListener("click", () =>
+      interactiveItemMethods.deleteItem(projectTitle, title, itemContainer)
+    );
+  }
   return {
     printItem,
     printTitle,
@@ -266,39 +273,36 @@ const interactiveItemMethods = (() => {
     );
   }
 
-  function sumbitChanges() {}
-
   function editTitleListener(titleItem, TitleContainer) {
-    const unEditedText = TitleContainer.textContent
+    const unEditedText = TitleContainer.textContent;
     titleItem.remove();
     const titleInput = document.createElement("input");
     titleInput.classList.add("title-input");
     titleInput.placeholder = "Task Title";
-    titleInput.value = unEditedText
+    titleInput.value = unEditedText;
     TitleContainer.appendChild(titleInput);
     return titleInput;
   }
 
   function editDescriptionListener(descriptionItem, descriptionContainer) {
-    const unEditedText = descriptionContainer.textContent
+    const unEditedText = descriptionContainer.textContent;
     descriptionItem.remove();
     const descriptionInput = document.createElement("input");
     descriptionInput.classList.add("description-input");
     descriptionInput.placeholder = "Task Description";
-    descriptionInput.value = unEditedText
+    descriptionInput.value = unEditedText;
 
     descriptionContainer.appendChild(descriptionInput);
     return descriptionInput;
   }
 
   function editDateListener(dateItem, dateContainer) {
-    const unEditedText = dateContainer.textContent
+    const unEditedText = dateContainer.textContent;
     dateItem.remove();
     const dateInput = document.createElement("input");
     dateInput.classList.add("date-input");
     dateInput.type = "date";
-    dateInput.value = unEditedText
-
+    dateInput.value = unEditedText;
     dateContainer.appendChild(dateInput);
     return dateInput;
   }
@@ -314,10 +318,12 @@ const interactiveItemMethods = (() => {
     itemTitle,
     projectTitle
   ) {
-
     let itemName = titleItem.textContent;
     let titleInput = editTitleListener(titleItem, TitleContainer);
-    let descriptionInput = editDescriptionListener(descriptionItem,descriptionContainer);
+    let descriptionInput = editDescriptionListener(
+      descriptionItem,
+      descriptionContainer
+    );
     let dateInput = editDateListener(dateItem, dateContainer);
     let sumbitBtn = document.createElement("button");
     sumbitBtn.textContent = "Sumbit";
@@ -325,18 +331,25 @@ const interactiveItemMethods = (() => {
     sumbitBtn.addEventListener("click", () => {
       item.title = titleInput.value;
       item.description = descriptionInput.value;
-      item.duedate = dateInput.value;
-      itemContainer.remove()
-      printItemMethods.printItem(item.title , item.description,  item.duedate, "undefined")
-
-
-
+      item.dueDate = dateInput.value;
+      itemContainer.remove();
+      printItemMethods.printItem(
+        item.title,
+        item.description,
+        item.dueDate,
+        "undefined"
+      );
     });
 
     itemContainer.appendChild(sumbitBtn);
   }
+  function deleteItem(projectTitle, itemTitle, itemContainer) {
+    itemContainer.remove();
+    itemMethods.deleteItem(projectTitle, itemTitle);
+  }
 
   return {
+    deleteItem,
     checkboxOffListener,
     checkboxOnListener,
     editItemListener,
