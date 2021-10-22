@@ -1,4 +1,4 @@
-import { mainMethods, promptMethods, domItemMethods } from "./domMain.js";
+import { mainMethods, promptMethods, printItemMethods } from "./domMain.js";
 import { sidebarMethods, domProjectMethods } from "./domSideBar";
 
 mainMethods.printMain("Home");
@@ -6,7 +6,6 @@ domProjectMethods.printStoredProjects();
 //to do
 /* }
 
-REFACTEAR DE NUEVO EL DOM
 
     ----- SIstema de prioridades | ordenNumeral   /..?? supongo que por un lado tendria que modificar en el itemfactory y por el otro lado en el Dom Item Methods + el read
     ----- local storage                                   /storage.js
@@ -14,3 +13,4 @@ REFACTEAR DE NUEVO EL DOM
     ------- editar los items 
     ------- borrar proyectos o tiemsco+
  */
+

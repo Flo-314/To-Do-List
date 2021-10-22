@@ -1,5 +1,5 @@
 import { projectMethods } from "./projects.js";
-import { mainMethods, promptMethods, domItemMethods } from "./domMain.js";
+import { mainMethods, printItemMethods } from "./domMain.js";
 
 const sidebarMethods = (() => {
   function addListener(projectTitle) {
@@ -86,7 +86,7 @@ const domProjectMethods = (() => {
 
     if (project !== undefined) {
       project.info.forEach((element) => {
-        domItemMethods.printItem(
+        printItemMethods.printItem(
           element.title,
           element.description,
           element.dueDate
