@@ -5,7 +5,9 @@ const projectFactory = (projectInput) => {
   let info = [];
   return { title, info };
 };
-let projectsArray =  [
+
+const projectMethods = (() => {
+  let projectsArray =  [
   {
     title: "Home",
     info: [],
@@ -27,8 +29,6 @@ let projectsArray =  [
     info: [],
   },
 ];
-const projectMethods = (() => {
-  
 
   function findProject(ProjectTitle) {
     let project = projectsArray.find(

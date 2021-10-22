@@ -14,13 +14,12 @@ const localStorageMethods = (() => {
       storedSession !== null &&
       storedSession !== ""
     ) {
+        projectMethods.projectsArray.slice(1,0)
       storedSession.forEach((element) => {
         projectMethods.projectsArray.push(element);
       });
     }
-    else{bodyArray.forEach((element) => {
-        projectMethods.projectsArray.push(element);
-      });}
+  
   }
 
   return { updateLocalStorage, checkLocalStorage };
