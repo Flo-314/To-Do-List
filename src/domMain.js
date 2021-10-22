@@ -104,6 +104,8 @@ const printItemMethods = (() => {
   function printHomeItems() {
     let homeArray = projectMethods.projectsArray;
     homeArray.forEach((project) => {
+      console.log(project)
+      console.log(project.info)
       let projectItems = project.info;
 
       projectItems.forEach((item) => {

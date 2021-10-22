@@ -1,4 +1,6 @@
 import { projectMethods } from "./projects.js";
+import { localStorageMethods } from "./storage.js";
+
 
 const itemFactory = (title, description, dueDate, checklist, priority) => {
   return { title, description, dueDate, priority, checklist };
@@ -10,6 +12,9 @@ const itemMethods = (() => {
     let ProjectTitle = document.querySelector("#main-title").textContent;
     let project = projectMethods.findProject(ProjectTitle);
     project.info.push(newItem);
+    localStorageMethods.updateLocalStorage()
+    console.log(projectMethods.projectsArray)
+
   }
 
   function findItem(projectTitle, title) {
@@ -24,8 +29,9 @@ const itemMethods = (() => {
         project.info.splice(index);
       }
     });
+    localStorageMethods.updateLocalStorage()
 
-  }
+    }
 
   return { createItem, findItem, deleteItem };
 })();

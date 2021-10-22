@@ -1,3 +1,5 @@
+import { localStorageMethods } from "./storage.js";
+
 const projectFactory = (projectInput) => {
   let title = projectInput;
   let info = [];
@@ -38,6 +40,7 @@ const projectMethods = (() => {
   function createProject(projectTitle) {
     let newProject = projectFactory(projectTitle);
     projectsArray.push(newProject);
+    localStorageMethods.updateLocalStorage()
   }
   return { findProject, createProject, projectsArray };
 })();
