@@ -99,6 +99,7 @@ const promptMethods = (() => {
   return { createItemBtn };
 })();
 
+
 const printItemMethods = (() => {
   function printHomeItems() {
     let homeArray = projectMethods.projectsArray;
@@ -121,7 +122,6 @@ const printItemMethods = (() => {
     const rightContainer = document.createElement("div");
     rightContainer.classList.add("right-container");
 
-
     const titleItem = printTitle(title);
     const itemTitleContainer = titleItem.itemTitleContainer;
     const itemTitle = titleItem.itemTitle;
@@ -138,7 +138,6 @@ const printItemMethods = (() => {
         projectTitle
       );
     });
-
 
     const descriptionItem = printItemDescription(description);
     const itemDescriptionContainer = descriptionItem.itemDescriptionContainer;
@@ -157,7 +156,6 @@ const printItemMethods = (() => {
       );
     });
 
-    
     const duedateItem = printDuedate(duedate);
     const itemDueDateContainer = duedateItem.itemDueDateContainer;
     const itemDueDate = duedateItem.itemDueDate;
@@ -175,7 +173,7 @@ const printItemMethods = (() => {
       );
     });
 
-    const checklistItem = printChecklist(checklist,title,projectTitle)
+    const checklistItem = printChecklist(checklist, title, projectTitle);
 
     const hr = document.createElement("hr");
 
@@ -184,6 +182,7 @@ const printItemMethods = (() => {
     item.append(leftContainer, rightContainer, hr);
     itemContainer.appendChild(item);
   }
+
   function printTitle(title) {
     const itemTitleContainer = document.createElement("div");
     const itemTitle = document.createElement("div");
@@ -208,7 +207,7 @@ const printItemMethods = (() => {
     itemDueDate.textContent = duedate;
     return { itemDueDateContainer, itemDueDate };
   }
-  function printChecklist(checklist,title,projectTitle) {
+  function printChecklist(checklist, title, projectTitle) {
     const checklistItem = document.createElement("div");
     checklistItem.classList.add("item-checklist");
     if (checklist !== "checked") {
@@ -231,10 +230,17 @@ const printItemMethods = (() => {
         )
       );
     }
-    
-    return  checklistItem ;
+
+    return checklistItem;
   }
-  return { printItem, printHomeItems };
+  return {
+    printItem,
+    printTitle,
+    printItemDescription,
+    printDuedate,
+    printChecklist,
+    printHomeItems,
+  };
 })();
 
 const interactiveItemMethods = (() => {
@@ -244,11 +250,9 @@ const interactiveItemMethods = (() => {
     let item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "unchecked";
 
-
     checklistItem.addEventListener("click", () =>
       checkboxOffListener(checklistItem, itemTitle, projectTitle)
     );
-
   }
 
   function checkboxOffListener(checklistItem, itemTitle, projectTitle) {
@@ -257,38 +261,44 @@ const interactiveItemMethods = (() => {
     let item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "checked";
 
-
     checklistItem.addEventListener("click", () =>
       checkboxOnListener(checklistItem, itemTitle, projectTitle)
     );
-
   }
 
   function sumbitChanges() {}
 
   function editTitleListener(titleItem, TitleContainer) {
+    const unEditedText = TitleContainer.textContent
     titleItem.remove();
     const titleInput = document.createElement("input");
     titleInput.classList.add("title-input");
     titleInput.placeholder = "Task Title";
+    titleInput.value = unEditedText
     TitleContainer.appendChild(titleInput);
     return titleInput;
   }
 
   function editDescriptionListener(descriptionItem, descriptionContainer) {
+    const unEditedText = descriptionContainer.textContent
     descriptionItem.remove();
     const descriptionInput = document.createElement("input");
     descriptionInput.classList.add("description-input");
     descriptionInput.placeholder = "Task Description";
+    descriptionInput.value = unEditedText
+
     descriptionContainer.appendChild(descriptionInput);
     return descriptionInput;
   }
 
   function editDateListener(dateItem, dateContainer) {
+    const unEditedText = dateContainer.textContent
     dateItem.remove();
     const dateInput = document.createElement("input");
     dateInput.classList.add("date-input");
     dateInput.type = "date";
+    dateInput.value = unEditedText
+
     dateContainer.appendChild(dateInput);
     return dateInput;
   }
@@ -304,35 +314,31 @@ const interactiveItemMethods = (() => {
     itemTitle,
     projectTitle
   ) {
+
     let itemName = titleItem.textContent;
     let titleInput = editTitleListener(titleItem, TitleContainer);
-    let descriptionInput = editDescriptionListener(
-      descriptionItem,
-      descriptionContainer
-    );
+    let descriptionInput = editDescriptionListener(descriptionItem,descriptionContainer);
     let dateInput = editDateListener(dateItem, dateContainer);
     let sumbitBtn = document.createElement("button");
     sumbitBtn.textContent = "Sumbit";
     let item = itemMethods.findItem(projectTitle, itemName);
-
     sumbitBtn.addEventListener("click", () => {
       item.title = titleInput.value;
       item.description = descriptionInput.value;
       item.duedate = dateInput.value;
-      titleInput.remove();
-      descriptionInput.remove();
-      dateInput.remove();
-      sumbitBtn.remove();
-      //printItemTitle()
-      //printItemDescription()
-      //printItemDate()
+      itemContainer.remove()
+      printItemMethods.printItem(item.title , item.description,  item.duedate, "undefined")
+
+
+
     });
 
     itemContainer.appendChild(sumbitBtn);
   }
 
   return {
-    checkboxOffListener,checkboxOnListener,
+    checkboxOffListener,
+    checkboxOnListener,
     editItemListener,
   };
 })();
