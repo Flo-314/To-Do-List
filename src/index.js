@@ -1,11 +1,12 @@
 import { mainMethods} from "./domMain.js";
 import { domProjectMethods } from "./domSideBar";
 import { localStorageMethods } from "./storage.js";
+import { projectMethods } from "./projects.js";
 
-
-localStorageMethods.checkLocalStorage()
+ localStorageMethods.checkLocalStorage()
 domProjectMethods.printStoredProjects();
-mainMethods.printMain("Home");
+mainMethods.printMain("Home"); 
+console.log(projectMethods.projectsArray)
 
 //to do
 /* 

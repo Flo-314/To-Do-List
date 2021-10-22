@@ -5,30 +5,30 @@ const projectFactory = (projectInput) => {
   let info = [];
   return { title, info };
 };
-
+let projectsArray =  [
+  {
+    title: "Home",
+    info: [],
+  },
+  {
+    title: "Today",
+    info: [],
+  },
+  {
+    title: "Week",
+    info: [],
+  },
+  {
+    title: "TEste 1 ",
+    info: [],
+  },
+  {
+    title: "teste 2 ",
+    info: [],
+  },
+];
 const projectMethods = (() => {
-  let projectsArray = [
-    {
-      title: "Home",
-      info: [],
-    },
-    {
-      title: "Today",
-      info: [],
-    },
-    {
-      title: "Week",
-      info: [],
-    },
-    {
-      title: "TEste 1 ",
-      info: [],
-    },
-    {
-      title: "teste 2 ",
-      info: [],
-    },
-  ];
+  
 
   function findProject(ProjectTitle) {
     let project = projectsArray.find(
@@ -42,7 +42,8 @@ const projectMethods = (() => {
     projectsArray.push(newProject);
     localStorageMethods.updateLocalStorage()
   }
-  return { findProject, createProject, projectsArray };
+
+  return { findProject, createProject, projectsArray, };
 })();
 
 export { projectFactory, projectMethods };
