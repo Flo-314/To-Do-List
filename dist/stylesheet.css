@@ -181,6 +181,25 @@ border: 3px solid white;
   background-color: green;
 }
 
+
+
+.item button {
+  border:none;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(43, 43, 43);
+  transition: all 0.5s;
+}
+.item button:hover{
+  color: #e6bb4d;
+  transform: scale(1.1);
+  transition: all 0.5s;
+  background-color: rgb(55, 55, 55);
+
+}
+
 main #itemBtn {
   border:none;
   font-size: 18px;

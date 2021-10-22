@@ -116,34 +116,104 @@ const printItemMethods = (() => {
     const itemContainer = document.querySelector("#item-container");
     const item = document.createElement("div");
     item.classList.add("item");
-
     const leftContainer = document.createElement("div");
     leftContainer.classList.add("left-container");
-
-  
-    const itemTitleContainer = document.createElement("div");
-    const itemTitle = document.createElement("div")
-    itemTitleContainer.appendChild(itemTitle)
-    itemTitleContainer.classList.add("item-title");
-    itemTitle.textContent = title;
-    itemTitle.addEventListener("click", () => { interactiveItemMethods.editItemListener(itemTitle,itemTitleContainer,itemDescription,itemDescriptionContainer,itemDueDate,itemDueDateContainer,item,title,projectTitle);
-    });
-  
-    const itemDescriptionContainer = document.createElement("div");
-    const itemDescription = document.createElement("div");
-    itemDescriptionContainer.appendChild(itemDescription)
-    itemDescription.classList.add("item-description");
-    itemDescription.textContent = description;
-    itemDescription.addEventListener("click", () => { interactiveItemMethods.editItemListener(itemTitle,itemTitleContainer,itemDescription,itemDescriptionContainer,itemDueDate,itemDueDateContainer,item,title,projectTitle);
-    });
-
     const rightContainer = document.createElement("div");
     rightContainer.classList.add("right-container");
 
+
+    const titleItem = printTitle(title);
+    const itemTitleContainer = titleItem.itemTitleContainer;
+    const itemTitle = titleItem.itemTitle;
+    itemTitle.addEventListener("click", () => {
+      interactiveItemMethods.editItemListener(
+        itemTitle,
+        itemTitleContainer,
+        itemDescription,
+        itemDescriptionContainer,
+        itemDueDate,
+        itemDueDateContainer,
+        item,
+        title,
+        projectTitle
+      );
+    });
+
+
+    const descriptionItem = printItemDescription(description);
+    const itemDescriptionContainer = descriptionItem.itemDescriptionContainer;
+    const itemDescription = descriptionItem.itemDescription;
+    itemDescription.addEventListener("click", () => {
+      interactiveItemMethods.editItemListener(
+        itemTitle,
+        itemTitleContainer,
+        itemDescription,
+        itemDescriptionContainer,
+        itemDueDate,
+        itemDueDateContainer,
+        item,
+        title,
+        projectTitle
+      );
+    });
+
+    
+    const duedateItem = printDuedate(duedate);
+    const itemDueDateContainer = duedateItem.itemDueDateContainer;
+    const itemDueDate = duedateItem.itemDueDate;
+    itemDueDate.addEventListener("click", () => {
+      interactiveItemMethods.editItemListener(
+        itemTitle,
+        itemTitleContainer,
+        itemDescription,
+        itemDescriptionContainer,
+        itemDueDate,
+        itemDueDateContainer,
+        item,
+        title,
+        projectTitle
+      );
+    });
+
+    const checklistItem = printChecklist(checklist,title,projectTitle)
+
+    const hr = document.createElement("hr");
+
+    leftContainer.append(itemTitleContainer, itemDescriptionContainer);
+    rightContainer.append(checklistItem, itemDueDateContainer);
+    item.append(leftContainer, rightContainer, hr);
+    itemContainer.appendChild(item);
+  }
+  function printTitle(title) {
+    const itemTitleContainer = document.createElement("div");
+    const itemTitle = document.createElement("div");
+    itemTitleContainer.appendChild(itemTitle);
+    itemTitleContainer.classList.add("item-title");
+    itemTitle.textContent = title;
+    return { itemTitleContainer, itemTitle };
+  }
+  function printItemDescription(description) {
+    const itemDescriptionContainer = document.createElement("div");
+    const itemDescription = document.createElement("div");
+    itemDescriptionContainer.appendChild(itemDescription);
+    itemDescription.classList.add("item-description");
+    itemDescription.textContent = description;
+    return { itemDescriptionContainer, itemDescription };
+  }
+  function printDuedate(duedate) {
+    const itemDueDateContainer = document.createElement("div");
+    const itemDueDate = document.createElement("div");
+    itemDueDateContainer.appendChild(itemDueDate);
+    itemDueDate.classList.add("item-duedate");
+    itemDueDate.textContent = duedate;
+    return { itemDueDateContainer, itemDueDate };
+  }
+  function printChecklist(checklist,title,projectTitle) {
     const checklistItem = document.createElement("div");
     checklistItem.classList.add("item-checklist");
     if (checklist !== "checked") {
       checklistItem.classList.add("unchecked");
+
       checklistItem.addEventListener("click", () =>
         interactiveItemMethods.checkboxOffListener(
           checklistItem,
@@ -161,21 +231,9 @@ const printItemMethods = (() => {
         )
       );
     }
-    const itemDueDateContainer = document.createElement("div");
-    const itemDueDate = document.createElement("div");
-    itemDueDateContainer.appendChild(itemDueDate)
-    itemDueDate.classList.add("item-duedate");
-    itemDueDate.textContent = duedate;
-    itemDueDate.addEventListener("click", () => { interactiveItemMethods.editItemListener(itemTitle,itemTitleContainer,itemDescription,itemDescriptionContainer,itemDueDate,itemDueDateContainer,item,title,projectTitle);
-    });
-    const hr = document.createElement("hr");
-
-    leftContainer.append(itemTitleContainer, itemDescriptionContainer);
-    rightContainer.append(checklistItem, itemDueDateContainer);
-    item.append(leftContainer, rightContainer, hr);
-    itemContainer.appendChild(item);
+    
+    return  checklistItem ;
   }
-
   return { printItem, printHomeItems };
 })();
 
@@ -186,9 +244,11 @@ const interactiveItemMethods = (() => {
     let item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "unchecked";
 
+
     checklistItem.addEventListener("click", () =>
       checkboxOffListener(checklistItem, itemTitle, projectTitle)
     );
+
   }
 
   function checkboxOffListener(checklistItem, itemTitle, projectTitle) {
@@ -196,67 +256,84 @@ const interactiveItemMethods = (() => {
     checklistItem.classList.add("checked");
     let item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "checked";
+
+
     checklistItem.addEventListener("click", () =>
       checkboxOnListener(checklistItem, itemTitle, projectTitle)
     );
-  }
-
-  function sumbitChanges(){
 
   }
 
-  function editTitleListener(titleItem,TitleContainer) {
-    titleItem.remove()
+  function sumbitChanges() {}
+
+  function editTitleListener(titleItem, TitleContainer) {
+    titleItem.remove();
     const titleInput = document.createElement("input");
     titleInput.classList.add("title-input");
     titleInput.placeholder = "Task Title";
     TitleContainer.appendChild(titleInput);
+    return titleInput;
   }
-  
-  function editDescriptionListener(descriptionItem,descriptionContainer) {
-    descriptionItem.remove()
+
+  function editDescriptionListener(descriptionItem, descriptionContainer) {
+    descriptionItem.remove();
     const descriptionInput = document.createElement("input");
     descriptionInput.classList.add("description-input");
     descriptionInput.placeholder = "Task Description";
     descriptionContainer.appendChild(descriptionInput);
+    return descriptionInput;
   }
-  
-  function editDateListener(dateItem,dateContainer) {
-    dateItem.remove()
+
+  function editDateListener(dateItem, dateContainer) {
+    dateItem.remove();
     const dateInput = document.createElement("input");
     dateInput.classList.add("date-input");
-    dateInput.type = "date"
+    dateInput.type = "date";
     dateContainer.appendChild(dateInput);
+    return dateInput;
   }
 
-  function editItemListener(titleItem,TitleContainer,descriptionItem,descriptionContainer,dateItem,dateContainer,itemContainer,itemTitle,projectTitle) {
-    let itemName = titleItem.textContent
-    console.log(itemName)
-    editTitleListener(titleItem,TitleContainer);
-    editDescriptionListener(descriptionItem,descriptionContainer);
-    editDateListener(dateItem,dateContainer);
+  function editItemListener(
+    titleItem,
+    TitleContainer,
+    descriptionItem,
+    descriptionContainer,
+    dateItem,
+    dateContainer,
+    itemContainer,
+    itemTitle,
+    projectTitle
+  ) {
+    let itemName = titleItem.textContent;
+    let titleInput = editTitleListener(titleItem, TitleContainer);
+    let descriptionInput = editDescriptionListener(
+      descriptionItem,
+      descriptionContainer
+    );
+    let dateInput = editDateListener(dateItem, dateContainer);
     let sumbitBtn = document.createElement("button");
     sumbitBtn.textContent = "Sumbit";
-   let item = itemMethods.findItem(projectTitle,itemTitle)
-   
-   
-    /* 
-    findear el item 
-    item.date = input.coso
-    item.title = input.title
-    item.
+    let item = itemMethods.findItem(projectTitle, itemName);
 
+    sumbitBtn.addEventListener("click", () => {
+      item.title = titleInput.value;
+      item.description = descriptionInput.value;
+      item.duedate = dateInput.value;
+      titleInput.remove();
+      descriptionInput.remove();
+      dateInput.remove();
+      sumbitBtn.remove();
+      //printItemTitle()
+      //printItemDescription()
+      //printItemDate()
+    });
 
-     */
     itemContainer.appendChild(sumbitBtn);
   }
 
   return {
-    checkboxOffListener,
-    checkboxOnListener,
+    checkboxOffListener,checkboxOnListener,
     editItemListener,
-    editTitleListener,
-    editDateListener,editDescriptionListener
   };
 })();
 
