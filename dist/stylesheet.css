@@ -136,7 +136,7 @@ main hr {
 main .item {
  display: grid;
  grid-template-areas:
- " left-container right-container";
+ " left-container right-container button";
 grid-template-rows: auto;
 grid-template-columns: 1fr 1fr;
   width: 50%;
@@ -184,6 +184,7 @@ border: 3px solid white;
 
 
 .item button {
+  grid-area: button;
   border:none;
   font-size: 18px;
   font-weight: 600;
