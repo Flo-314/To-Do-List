@@ -12,8 +12,13 @@ const itemMethods = (() => {
     let ProjectTitle = document.querySelector("#main-title").textContent;
     let project = projectMethods.findProject(ProjectTitle);
     project.info.push(newItem);
+
+
     localStorageMethods.updateLocalStorage()
     console.log(projectMethods.projectsArray)
+    console.log(JSON.parse(localStorage.getItem("session")))
+
+
 
   }
 

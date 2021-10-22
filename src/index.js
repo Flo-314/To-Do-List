@@ -6,7 +6,6 @@ import { projectMethods } from "./projects.js";
  localStorageMethods.checkLocalStorage()
 domProjectMethods.printStoredProjects();
 mainMethods.printMain("Home"); 
-console.log(projectMethods.projectsArray)
 
 //to do
 /* 

@@ -40,10 +40,15 @@ const projectMethods = (() => {
   function createProject(projectTitle) {
     let newProject = projectFactory(projectTitle);
     projectsArray.push(newProject);
+    console.log(projectsArray)
     localStorageMethods.updateLocalStorage()
   }
+  function sliceProject(){
+    projectsArray = projectsArray.slice(999)
+    console.log(projectsArray)
+  }
 
-  return { findProject, createProject, projectsArray, };
+  return { findProject, createProject, projectsArray, sliceProject};
 })();
 
 export { projectFactory, projectMethods };
