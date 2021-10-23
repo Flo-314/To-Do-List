@@ -23,6 +23,7 @@ const domProjectMethods = (() => {
           element.title,
           element.description,
           element.dueDate,
+          element.checklist,
         );
       });
     }

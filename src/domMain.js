@@ -11,6 +11,7 @@ const interactiveItemMethods = (() => {
     checklistItem.classList.add("unchecked");
     const item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "unchecked";
+    localStorageMethods.updateLocalStorage();
 
     // eslint-disable-next-line no-use-before-define
     checklistItem.addEventListener("click", () => checkboxOffListener(checklistItem, itemTitle, projectTitle));
@@ -21,7 +22,7 @@ const interactiveItemMethods = (() => {
     checklistItem.classList.add("checked");
     const item = itemMethods.findItem(projectTitle, itemTitle);
     item.checklist = "checked";
-
+    localStorageMethods.updateLocalStorage();
     checklistItem.addEventListener("click", () => checkboxOnListener(checklistItem, itemTitle, projectTitle));
   }
 
@@ -90,7 +91,7 @@ const interactiveItemMethods = (() => {
         item.title,
         item.description,
         item.dueDate,
-        "undefined",
+        item.checklist,
       );
       localStorageMethods.updateLocalStorage();
     });
@@ -109,8 +110,7 @@ const interactiveItemMethods = (() => {
     editItemListener,
   };
 })();
-
-const printItemMethods = (() => {
+const skeletonItemMethods = (() => {
   function printTitle(title) {
     const itemTitleContainer = document.createElement("div");
     const itemTitle = document.createElement("div");
@@ -163,7 +163,15 @@ const printItemMethods = (() => {
     deleteBtn.textContent = "Delete Item";
     deleteBtn.addEventListener("click", () => interactiveItemMethods.deleteItem(projectTitle, title, itemContainer));
   }
-
+  return {
+    printDeleteButton,
+    printTitle,
+    printItemDescription,
+    printDuedate,
+    printChecklist,
+  };
+})();
+const printItemMethods = (() => {
   function printItem(title, description, duedate, checklist) {
     const projectTitle = document.querySelector("#main-title").textContent;
     const itemContainer = document.querySelector("#item-container");
@@ -174,20 +182,20 @@ const printItemMethods = (() => {
     const rightContainer = document.createElement("div");
     rightContainer.classList.add("right-container");
 
-    const titleItem = printTitle(title);
+    const titleItem = skeletonItemMethods.printTitle(title);
     const { itemTitleContainer } = titleItem;
     const { itemTitle } = titleItem;
 
-    const descriptionItem = printItemDescription(description);
+    const descriptionItem = skeletonItemMethods.printItemDescription(description);
     const { itemDescriptionContainer } = descriptionItem;
     const { itemDescription } = descriptionItem;
 
-    const duedateItem = printDuedate(duedate);
+    const duedateItem = skeletonItemMethods.printDuedate(duedate);
     const { itemDueDateContainer } = duedateItem;
     const { itemDueDate } = duedateItem;
 
-    const checklistItem = printChecklist(checklist, title, projectTitle);
-    printDeleteButton(projectTitle, title, item);
+    const checklistItem = skeletonItemMethods.printChecklist(checklist, title, projectTitle);
+    skeletonItemMethods.printDeleteButton(projectTitle, title, item);
     const hr = document.createElement("hr");
 
     itemTitle.addEventListener("click", () => {
@@ -243,7 +251,7 @@ const printItemMethods = (() => {
       const projectItems = project.info;
 
       projectItems.forEach((item) => {
-        printItem(item.title, item.description, item.dueDate);
+        printItem(item.title, item.description, item.dueDate, item.checklist);
       });
     });
   }
@@ -254,7 +262,7 @@ const printItemMethods = (() => {
       projectItems.forEach((item) => {
         const isoDate = parseISO(item.dueDate);
         if (isToday(isoDate) === true) {
-          printItem(item.title, item.description, item.dueDate);
+          printItem(item.title, item.description, item.dueDate, item.checklist);
         }
       });
     });
@@ -266,22 +274,19 @@ const printItemMethods = (() => {
       projectItems.forEach((item) => {
         const isoDate = parseISO(item.dueDate);
         if (isThisWeek(isoDate) === true) {
-          printItem(item.title, item.description, item.dueDate);
+          printItem(item.title, item.description, item.dueDate, item.checklist);
         }
       });
     });
   }
   return {
     printItem,
-    printTitle,
-    printItemDescription,
-    printDuedate,
-    printChecklist,
     printHomeItems,
     printTodayItems,
     printWeekItems,
   };
 })();
+
 const mainMethods = (() => {
   function deleteMain() {
     const main = document.querySelector("main");
