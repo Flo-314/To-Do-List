@@ -1,42 +1,45 @@
-import { projectMethods } from "./projects.js";
-import { localStorageMethods } from "./storage.js";
+/* eslint-disable import/no-cycle */
+import { projectMethods } from "./projects";
+import { localStorageMethods } from "./storage";
 
-
-const itemFactory = (title, description, dueDate, checklist, priority) => {
-  return { title, description, dueDate, priority, checklist };
-};
+const itemFactory = (title, description, dueDate, checklist, priority) => ({
+  title,
+  description,
+  dueDate,
+  priority,
+  checklist,
+});
 
 const itemMethods = (() => {
   function createItem(title, description, dueDate, checklist, priority) {
-    let newItem = itemFactory(title, description, dueDate, checklist, priority);
-    let ProjectTitle = document.querySelector("#main-title").textContent;
-    let project = projectMethods.findProject(ProjectTitle);
+    const newItem = itemFactory(
+      title,
+      description,
+      dueDate,
+      checklist,
+      priority,
+    );
+    const ProjectTitle = document.querySelector("#main-title").textContent;
+    const project = projectMethods.findProject(ProjectTitle);
     project.info.push(newItem);
 
-
-    localStorageMethods.updateLocalStorage()
-    console.log(projectMethods.projectsArray)
-    console.log(JSON.parse(localStorage.getItem("session")))
-
-
-
+    localStorageMethods.updateLocalStorage();
   }
 
   function findItem(projectTitle, title) {
-    let project = projectMethods.findProject(projectTitle);
-    let item = project.info.find((item) => item.title === title);
-    return item;
+    const project = projectMethods.findProject(projectTitle);
+    const foundedItem = project.info.find((item) => item.title === title);
+    return foundedItem;
   }
   function deleteItem(projectTitle, title) {
-    let project = projectMethods.findProject(projectTitle);
-    project.info.forEach(function (item, index) {
-      if (item.title == title) {
+    const project = projectMethods.findProject(projectTitle);
+    project.info.forEach((item, index) => {
+      if (item.title === title) {
         project.info.splice(index);
       }
     });
-    localStorageMethods.updateLocalStorage()
-
-    }
+    localStorageMethods.updateLocalStorage();
+  }
 
   return { createItem, findItem, deleteItem };
 })();

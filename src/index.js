@@ -1,14 +1,17 @@
-import { mainMethods} from "./domMain.js";
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+import { mainMethods } from "./domMain";
 import { domProjectMethods } from "./domSideBar";
-import { localStorageMethods } from "./storage.js";
-import { projectMethods } from "./projects.js";
+import { localStorageMethods } from "./storage";
+import { projectMethods } from "./projects";
 
- localStorageMethods.checkLocalStorage()
+localStorageMethods.checkLocalStorage();
+
 domProjectMethods.printStoredProjects();
-mainMethods.printMain("Home"); 
+mainMethods.printMain("Home");
 
-//to do
-/* 
+// to do
+/*
     ----- local storage                                   /storage.js
     ------- no funciona bien el week por fechas ni el today por fechas. ni funciona en el home por como esta hecho.
  */
