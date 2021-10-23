@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
-import { projectMethods } from "./projects.js";
+import { projectMethods } from "./projects";
 
 const localStorageMethods = (() => {
   const templateArray = [
@@ -15,14 +15,6 @@ const localStorageMethods = (() => {
     },
     {
       title: "Week",
-      info: [],
-    },
-    {
-      title: "TEste 1 ",
-      info: [],
-    },
-    {
-      title: "teste 2 ",
       info: [],
     },
   ];

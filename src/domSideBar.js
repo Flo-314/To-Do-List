@@ -47,14 +47,28 @@ const domProjectMethods = (() => {
 const sidebarMethods = (() => {
   function addListener(projectTitle) {
     const project = document.querySelector(`.${projectTitle}`);
-    if (projectTitle !== "Home") {
-      project.addEventListener("click", () => {
-        mainMethods.printMain(projectTitle);
-      });
-    } else {
-      project.addEventListener("click", () => {
-        mainMethods.printMainHome();
-      });
+    switch (projectTitle) {
+      case "Home":
+        project.addEventListener("click", () => {
+          mainMethods.printMainHome();
+        });
+        break;
+      case "Today":
+        project.addEventListener("click", () => {
+          mainMethods.printMainToday();
+        });
+
+        break;
+      case "Week":
+        project.addEventListener("click", () => {
+          mainMethods.printMainWeek();
+        });
+        break;
+      default:
+        project.addEventListener("click", () => {
+          mainMethods.printMain(projectTitle);
+        });
+        break;
     }
   }
   function removeProjectPromp() {

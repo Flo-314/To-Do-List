@@ -37,8 +37,8 @@ const itemMethods = (() => {
       if (item.title === title) {
         project.info.splice(index);
       }
+      localStorageMethods.updateLocalStorage();
     });
-    localStorageMethods.updateLocalStorage();
   }
 
   return { createItem, findItem, deleteItem };

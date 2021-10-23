@@ -1,7 +1,9 @@
 /* eslint-disable import/no-cycle */
+import { isThisWeek, isToday, parseISO } from "date-fns";
 import { projectMethods } from "./projects";
 import { itemMethods } from "./items";
 import { domProjectMethods } from "./domSideBar";
+import { localStorageMethods } from "./storage";
 
 const interactiveItemMethods = (() => {
   function checkboxOnListener(checklistItem, itemTitle, projectTitle) {
@@ -90,6 +92,7 @@ const interactiveItemMethods = (() => {
         item.dueDate,
         "undefined",
       );
+      localStorageMethods.updateLocalStorage();
     });
 
     itemContainer.appendChild(sumbitBtn);
@@ -244,7 +247,30 @@ const printItemMethods = (() => {
       });
     });
   }
-
+  function printTodayItems() {
+    const todayArray = projectMethods.projectsArray;
+    todayArray.forEach((project) => {
+      const projectItems = project.info;
+      projectItems.forEach((item) => {
+        const isoDate = parseISO(item.dueDate);
+        if (isToday(isoDate) === true) {
+          printItem(item.title, item.description, item.dueDate);
+        }
+      });
+    });
+  }
+  function printWeekItems() {
+    const todayArray = projectMethods.projectsArray;
+    todayArray.forEach((project) => {
+      const projectItems = project.info;
+      projectItems.forEach((item) => {
+        const isoDate = parseISO(item.dueDate);
+        if (isThisWeek(isoDate) === true) {
+          printItem(item.title, item.description, item.dueDate);
+        }
+      });
+    });
+  }
   return {
     printItem,
     printTitle,
@@ -252,6 +278,8 @@ const printItemMethods = (() => {
     printDuedate,
     printChecklist,
     printHomeItems,
+    printTodayItems,
+    printWeekItems,
   };
 })();
 const mainMethods = (() => {
@@ -291,9 +319,24 @@ const mainMethods = (() => {
     mainTitle.textContent = "Home";
     printItemMethods.printHomeItems();
     // eslint-disable-next-line no-use-before-define
-    promptMethods.createItemBtn();
   }
-  return { printMain, deleteMain, printMainHome };
+  function printMainToday() {
+    deleteMain();
+    createMainBody();
+    const mainTitle = document.querySelector("#main-title");
+    mainTitle.textContent = "Today";
+    printItemMethods.printTodayItems();
+  }
+  function printMainWeek() {
+    deleteMain();
+    createMainBody();
+    const mainTitle = document.querySelector("#main-title");
+    mainTitle.textContent = "Today";
+    printItemMethods.printWeekItems();
+  }
+  return {
+    printMain, deleteMain, printMainHome, printMainToday, printMainWeek,
+  };
 })();
 const promptMethods = (() => {
   function removeItemPromp() {
