@@ -33,6 +33,8 @@ const interactiveItemMethods = (() => {
     titleInput.classList.add("title-input");
     titleInput.placeholder = "Task Title";
     titleInput.value = unEditedText;
+    titleInput.required = true;
+    titleInput.min = "1";
     TitleContainer.appendChild(titleInput);
     return titleInput;
   }
@@ -81,18 +83,23 @@ const interactiveItemMethods = (() => {
     const sumbitBtn = document.createElement("button");
     sumbitBtn.textContent = "Sumbit";
     const item = itemMethods.findItem(projectTitle, itemName);
+
     sumbitBtn.addEventListener("click", () => {
-      item.title = titleInput.value;
-      item.description = descriptionInput.value;
-      item.dueDate = dateInput.value;
-      itemContainer.remove();
-      // eslint-disable-next-line no-use-before-define
-      printItemMethods.printItem(
-        item.title,
-        item.description,
-        item.dueDate,
-        item.checklist,
-      );
+      if (titleInput.checkValidity()) {
+        item.title = titleInput.value;
+        item.description = descriptionInput.value;
+        item.dueDate = dateInput.value;
+        itemContainer.remove();
+        // eslint-disable-next-line no-use-before-define
+        printItemMethods.printItem(
+          item.title,
+          item.description,
+          item.dueDate,
+          item.checklist,
+        );
+      } else {
+        prompt("Please, write a  Title. Tanks.", "Please, write a  title. Tanks.");
+      }
       localStorageMethods.updateLocalStorage();
     });
 
@@ -336,7 +343,7 @@ const mainMethods = (() => {
     deleteMain();
     createMainBody();
     const mainTitle = document.querySelector("#main-title");
-    mainTitle.textContent = "Today";
+    mainTitle.textContent = "This Week";
     printItemMethods.printWeekItems();
   }
   return {
@@ -369,6 +376,8 @@ const promptMethods = (() => {
     itemTitle.type = "text";
     itemTitle.placeholder = "Task Title";
     itemTitle.classList.add("itemTitle");
+    itemTitle.required = true;
+    itemTitle.min = "1";
 
     const itemDescription = document.createElement("input");
     itemDescription.type = "text";
@@ -382,14 +391,18 @@ const promptMethods = (() => {
     sumbitBtn.textContent = "Add new Task!";
 
     sumbitBtn.addEventListener("click", () => {
-      const descriptionValue = itemDescription.value;
-      const titleValue = itemTitle.value;
-      const dueDateValue = dueDate.value;
+      if (itemTitle.checkValidity()) {
+        const descriptionValue = itemDescription.value;
+        const titleValue = itemTitle.value;
+        const dueDateValue = dueDate.value;
 
-      itemMethods.createItem(titleValue, descriptionValue, dueDateValue);
-      printItemMethods.printItem(titleValue, descriptionValue, dueDateValue);
-      removeItemPromp();
-      createItemBtn();
+        itemMethods.createItem(titleValue, descriptionValue, dueDateValue);
+        printItemMethods.printItem(titleValue, descriptionValue, dueDateValue);
+        removeItemPromp();
+        createItemBtn();
+      } else {
+        prompt("Please, write a title. Tanks.", "Please, write a title. Tanks.");
+      }
     });
 
     const main = document.querySelector("main");

@@ -100,17 +100,23 @@ const sidebarMethods = (() => {
     projectInput.type = "text";
     projectInput.placeholder = "Project Title";
     projectInput.classList.add("projectInput");
+    projectInput.required = true;
+    projectInput.min = "1";
 
     const sumbitProjectBtn = document.createElement("button");
     sumbitProjectBtn.classList.add("sumbitProjectBtn");
     sumbitProjectBtn.textContent = "Sumbit Project";
 
     sumbitProjectBtn.addEventListener("click", () => {
-      const projectTitle = projectInput.value;
-      projectMethods.createProject(projectTitle);
-      removeProjectPromp();
-      createProjectBtn();
-      domProjectMethods.printProject(projectTitle);
+      if (projectInput.checkValidity()) {
+        const projectTitle = projectInput.value;
+        projectMethods.createProject(projectTitle);
+        removeProjectPromp();
+        createProjectBtn();
+        domProjectMethods.printProject(projectTitle);
+      } else {
+        prompt("Please, write a project Title. Tanks.", "Please, write a project title. Tanks.");
+      }
     });
 
     addProjectContainer.append(projectInput, sumbitProjectBtn);
