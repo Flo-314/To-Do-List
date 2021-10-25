@@ -237,6 +237,7 @@ main .addItemContainer {
   margin-left: 19%;
 }
 .addItemContainer button {
+  cursor: pointer;
   border: none;
   color: white;
   font-size: 16px;

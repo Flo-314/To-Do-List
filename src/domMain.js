@@ -97,7 +97,7 @@ const interactiveItemMethods = (() => {
           item.dueDate,
           item.checklist,
         );
-      } else {
+      } else if (titleInput.validity.valueMissing) {
         prompt("Please, write a  Title. Tanks.", "Please, write a  title. Tanks.");
       }
       localStorageMethods.updateLocalStorage();
